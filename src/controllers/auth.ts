@@ -17,7 +17,7 @@ authController.get("/login/success", (req: Request, res: Response) => {
   });
 });
 
-authController.get("/login/failed", (req: Request, res: Response) => {
+authController.get("/login/failure", (req: Request, res: Response) => {
   res.status(401).json({
     success: false,
     message: "failure",
@@ -39,23 +39,19 @@ authController.get(
   "/google/callback",
   passport.authenticate("google", {
     successRedirect: process.env.SUCCESS_REDIRECT,
-    failureRedirect: "/login/failed",
+    failureRedirect: "/login/failure",
   })
 );
 
 authController.get(
   "/facebook",
-  passport.authenticate("facebook", { scope: ["profile"] })
+  passport.authenticate("facebook", { scope: ["public_profile", "email"] })
 );
 
 authController.get(
   "/facebook/callback",
   passport.authenticate("facebook", {
     successRedirect: process.env.SUCCESS_REDIRECT,
-    failureRedirect: "/login/failed",
+    failureRedirect: "/login/failure",
   })
 );
-
-authController.get("/twitter", (req, res) => {
-    res.send("Twitter login");
-});
