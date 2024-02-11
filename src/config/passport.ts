@@ -19,6 +19,11 @@ passport.use(
       profile: any,
       done: any
     ) {
+      /**
+       * check if user exists in the database
+       * if user exists, return the user
+       * if user does not exist, create a new user and return the user
+       */
       saveUserInDB(profile, done);
     }
   )
@@ -30,6 +35,7 @@ passport.use(
       clientID: process.env.FACEBOOK_APP_ID,
       clientSecret: process.env.FACEBOOK_APP_SECRET,
       callbackURL: `${process.env.CLIENT_URL}/v1/auth/facebook/callback`,
+      profileFields: ["id", "email", "displayName", "photos"],
     },
     function (
       accessToken: string,
@@ -37,6 +43,11 @@ passport.use(
       profile: any,
       done: any
     ) {
+      /**
+       * check if user exists in the database
+       * if user exists, return the user
+       * if user does not exist, create a new user and return the user
+       */
       saveUserInDB(profile, done);
     }
   )
