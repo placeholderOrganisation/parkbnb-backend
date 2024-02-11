@@ -12,8 +12,6 @@ interface Profile {
 export const saveUserInDB = async (profile: any, done: any) => {
   const userObj: Profile = _extractUserData(profile);
 
-  const newUser = new User(userObj);
-
   const existingUser = await _checkUserExists(userObj.id);
 
   if (existingUser) {
@@ -21,6 +19,8 @@ export const saveUserInDB = async (profile: any, done: any) => {
     return done(null, profile);
   } else {
     try {
+      const newUser = new User(userObj);
+
       // Validate the user data before saving
       await newUser.validate();
 
@@ -28,6 +28,7 @@ export const saveUserInDB = async (profile: any, done: any) => {
       await newUser.save();
 
       console.info("saved user to database");
+
       return done(null, profile);
     } catch (error) {
       if (error instanceof (ValidationError as any)) {

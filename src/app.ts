@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-import express, { Request, Response } from "express";
+import express from "express";
 import bodyParser from "body-parser";
 import passport from "passport";
 import cookieSession from "cookie-session";
@@ -11,8 +11,8 @@ import { initializeDbConnection } from "./config/db";
 initializeDbConnection();
 
 // Controllers (route handlers)
-import { userController } from "./controllers/user";
 import { authController } from "./controllers/auth";
+import { userController } from "./controllers/user";
 
 // Create Express server
 const app = express();
@@ -34,14 +34,6 @@ app.use(passport.session());
 
 app.use("/v1/users", userController);
 app.use("/v1/auth", authController);
-
-app.get("/success", (req: Request, res: Response) => {
-  res.send(req.user);
-})
-
-app.get("/test", (req: Request, res: Response) => {
-  res.send("test");
-})
 
 app.listen(app.get("port"), () => {
   console.log(

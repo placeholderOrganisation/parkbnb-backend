@@ -39,7 +39,7 @@ authController.get(
   "/google/callback",
   passport.authenticate("google", {
     successRedirect: process.env.SUCCESS_REDIRECT,
-    failureRedirect: "/login/failure",
+    failureRedirect: process.env.FAILURE_REDIRECT,
   })
 );
 
@@ -52,6 +52,6 @@ authController.get(
   "/facebook/callback",
   passport.authenticate("facebook", {
     successRedirect: process.env.SUCCESS_REDIRECT,
-    failureRedirect: "/login/failure",
+    failureRedirect: process.env.FAILURE_REDIRECT,
   })
 );
