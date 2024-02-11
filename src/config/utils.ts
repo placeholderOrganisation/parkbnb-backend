@@ -7,6 +7,7 @@ interface Profile {
   provider: string;
   email: [{ value: string }];
   images: [{ value: string }];
+  verified: Boolean;
 }
 
 export const saveUserInDB = async (profile: any, done: any) => {
@@ -49,8 +50,9 @@ const _extractUserData = (profile: any) => {
   const email = profile.emails[0].value;
   const images = profile.photos.map((photo: any) => photo.value);
   const provider = profile.provider;
+  const verified = false;
 
-  return { id, name, email, images, provider };
+  return { id, name, email, images, provider, verified };
 };
 
 export const _checkUserExists = async (id: string): Promise<boolean> => {
