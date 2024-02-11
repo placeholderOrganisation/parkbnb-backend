@@ -9,7 +9,7 @@ const uri: string =
     @input  :
     @return : (db object) return the db connection
 */
-export const getDbConnection = () => {
+export const initializeDbConnection = () => {
   if (!db) {
     mongoose
       .connect(uri)

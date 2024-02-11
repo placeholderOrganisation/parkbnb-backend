@@ -5,12 +5,14 @@ import bodyParser from "body-parser";
 import passport from "passport";
 import cookieSession from "cookie-session";
 
+// Passport + mongoose configuration
+import * as passportConfig from "./config/passport";
+import { initializeDbConnection } from "./config/db";
+initializeDbConnection();
+
 // Controllers (route handlers)
 import { userController } from "./controllers/user";
 import { authController } from "./controllers/auth";
-
-// API keys and Passport configuration
-import * as passportConfig from "./config/passport";
 
 // Create Express server
 const app = express();
@@ -35,6 +37,10 @@ app.use("/v1/auth", authController);
 
 app.get("/success", (req: Request, res: Response) => {
   res.send(req.user);
+})
+
+app.get("/test", (req: Request, res: Response) => {
+  res.send("test");
 })
 
 app.listen(app.get("port"), () => {
