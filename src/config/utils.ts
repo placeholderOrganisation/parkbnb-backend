@@ -1,8 +1,16 @@
 import ValidationError from "mongoose";
 import { User } from "../models/user-model";
 
+interface Profile {
+  id: string;
+  name: string;
+  provider: string;
+  email: [{ value: string }];
+  images: [{ value: string }];
+}
+
 export const saveUserInDB = async (profile: any, done: any) => {
-  const userObj = _extractUserData(profile);
+  const userObj: Profile = _extractUserData(profile);
 
   const newUser = new User(userObj);
 
@@ -39,8 +47,9 @@ const _extractUserData = (profile: any) => {
   const name = profile.displayName;
   const email = profile.emails[0].value;
   const images = profile.photos.map((photo: any) => photo.value);
+  const provider = profile.provider;
 
-  return { id, name, email, images };
+  return { id, name, email, images, provider };
 };
 
 export const _checkUserExists = async (id: string): Promise<boolean> => {
