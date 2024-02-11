@@ -32,7 +32,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize(passportConfig));
 app.use(passport.session());
 
-app.use("/v1/users", userController);
+app.use("/v1/user", userController);
 app.use("/v1/auth", authController);
 
 app.listen(app.get("port"), () => {
