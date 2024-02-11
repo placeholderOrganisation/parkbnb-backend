@@ -7,6 +7,7 @@ export const saveUserInDB = async (profile: any, done: any) => {
   const newUser = new User(userObj);
 
   const existingUser = await _checkUserExists(userObj.id);
+
   if (existingUser) {
     console.info("User already exists in the database");
     return done(null, profile);
@@ -33,6 +34,15 @@ export const saveUserInDB = async (profile: any, done: any) => {
   }
 };
 
+const _extractUserData = (profile: any) => {
+  const id = profile.id;
+  const name = profile.displayName;
+  const email = profile.emails[0].value;
+  const images = profile.photos.map((photo: any) => photo.value);
+
+  return { id, name, email, images };
+};
+
 export const _checkUserExists = async (id: string): Promise<boolean> => {
   try {
     const existingUser = await User.findOne({ id });
@@ -41,13 +51,4 @@ export const _checkUserExists = async (id: string): Promise<boolean> => {
     console.error("Error checking user existence:", error);
     return false;
   }
-};
-
-const _extractUserData = (profile: any) => {
-  const id = profile.id;
-  const name = profile.displayName;
-  const email = profile.emails[0].value;
-  const images = profile.photos.map((photo: any) => photo.value);
-
-  return { id, name, email, images };
 };
