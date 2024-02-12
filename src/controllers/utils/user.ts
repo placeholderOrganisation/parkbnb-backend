@@ -1,4 +1,5 @@
 import ValidationError from "mongoose";
+import { DoneCallback, Profile } from "passport";
 import { User, UserObject } from "../../models/user-model";
 
 /**
@@ -7,7 +8,7 @@ import { User, UserObject } from "../../models/user-model";
  * @param done
  * @returns
  */
-export const handleSocialMediaSignUp = async (profile: any, done: any) => {
+export const handleSocialMediaSignUp = async (profile: Profile, done: DoneCallback) => {
   const userObj: UserObject = assembleNewUserBody(profile);
 
   const existingUser: UserObject = await User.findOne({ id: userObj.id });
@@ -41,7 +42,7 @@ export const handleSocialMediaSignUp = async (profile: any, done: any) => {
   }
 };
 
-const assembleNewUserBody = (profile: any): UserObject => {
+const assembleNewUserBody = (profile: Profile): UserObject => {
   const newUser: UserObject = initializeEmptyUser();
   newUser.id = profile.id;
   newUser.name = profile.displayName;
