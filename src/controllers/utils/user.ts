@@ -1,27 +1,16 @@
 import ValidationError from "mongoose";
-import { User } from "../../models/user-model";
-
-interface UserObject {
-  id: string;
-  name: string;
-  provider: string;
-  email: string;
-  images: string[];
-  verified: Boolean;
-  contactNumber: string;
-  verification_img: string[];
-}
+import { User, UserObject } from "../../models/user-model";
 
 /**
  * Save user signing up via google or facebook in the database.
- * @param profile 
- * @param done 
- * @returns 
+ * @param profile
+ * @param done
+ * @returns
  */
 export const handleSocialMediaSignUp = async (profile: any, done: any) => {
   const userObj: UserObject = assembleNewUserBody(profile);
 
-  const existingUser = await User.findOne({ id: userObj.id });
+  const existingUser: UserObject = await User.findOne({ id: userObj.id });
 
   if (existingUser) {
     console.info("User already exists in the database");
@@ -70,10 +59,10 @@ const initializeEmptyUser = (): UserObject => {
     name: "",
     provider: "",
     email: "",
-    images: [] as string[],
+    images: [],
     verified: false,
     contactNumber: "",
-    verification_img: [] as string[],
+    verificationImageLink: [],
   };
 
   return newUserObject;
