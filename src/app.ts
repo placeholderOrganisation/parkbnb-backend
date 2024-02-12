@@ -11,8 +11,8 @@ import { initializeDbConnection } from "./config/db";
 initializeDbConnection();
 
 // Controllers (route handlers)
-import { authController } from "./controllers/auth";
-import { userController } from "./controllers/user";
+import { authController } from "./controllers/api/auth";
+import { userController } from "./controllers/api/user";
 
 // Create Express server
 const app = express();

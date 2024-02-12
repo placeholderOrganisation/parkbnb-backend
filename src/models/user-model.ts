@@ -6,17 +6,6 @@ const userSchema = new mongoose.Schema({
   contactNumber: String,
   email: String,
   images: [String],
-  rating: {
-    host: Number,
-    renter: Number,
-  },
-  reviews: [
-    {
-      review: String,
-      rating: Number,
-      user_id: String,
-    },
-  ],
   verified: Boolean,
   provider: String,
 });

@@ -4,7 +4,8 @@ import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { Strategy as FacebookStrategy } from "passport-facebook";
 
-import { saveUserInDB } from "./utils";
+import { handleSocialMediaSignUp } from "../controllers/utils/user";
+
 
 passport.use(
   new GoogleStrategy(
@@ -24,7 +25,7 @@ passport.use(
        * if user exists, return the user
        * if user does not exist, create a new user and return the user
        */
-      saveUserInDB(profile, done);
+      handleSocialMediaSignUp(profile, done);
     }
   )
 );
@@ -48,7 +49,7 @@ passport.use(
        * if user exists, return the user
        * if user does not exist, create a new user and return the user
        */
-      saveUserInDB(profile, done);
+      handleSocialMediaSignUp(profile, done);
     }
   )
 );
