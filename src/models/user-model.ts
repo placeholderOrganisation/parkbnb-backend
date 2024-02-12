@@ -14,11 +14,12 @@ export interface UserObject {
 const userSchema = new mongoose.Schema({
   id: String,
   name: String,
-  contactNumber: String,
+  provider: String,
   email: String,
   images: [String],
   verified: Boolean,
-  provider: String,
+  contactNumber: String,
+  verificationImageLink: [String]
 });
 
 export const User = mongoose.model("User", userSchema);
