@@ -11,7 +11,7 @@ export interface UserObject {
   verificationImageLink?: string[];
 }
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema<UserObject>({
   id: String,
   name: String,
   provider: String,

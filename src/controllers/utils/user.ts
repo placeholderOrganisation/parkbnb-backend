@@ -11,7 +11,7 @@ import { User, UserObject } from "../../models/user-model";
 export const handleSocialMediaSignUp = async (profile: Profile, done: DoneCallback) => {
   const userObj: UserObject = assembleNewUserBody(profile);
 
-  const existingUser: UserObject = await User.findOne({ id: userObj.id });
+  const existingUser = await User.findOne({ id: userObj.id });
 
   if (existingUser) {
     console.info("User already exists in the database");
