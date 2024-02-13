@@ -8,7 +8,10 @@ import { User, UserObject } from "../../models/user-model";
  * @param done
  * @returns
  */
-export const handleSocialMediaSignUp = async (profile: Profile, done: DoneCallback) => {
+export const handleSocialMediaSignUp = async (
+  profile: Profile,
+  done: DoneCallback
+) => {
   const userObj: UserObject = assembleNewUserBody(profile);
 
   const existingUser = await User.findOne({ id: userObj.id });
@@ -30,13 +33,7 @@ export const handleSocialMediaSignUp = async (profile: Profile, done: DoneCallba
 
       return done(null, profile);
     } catch (error) {
-      if (error instanceof (ValidationError as any)) {
-        // If validation fails, handle the validation error
-        console.error("Validation error:", error.message);
-      } else {
-        // Handle other errors
-        console.error("Error saving user to database", error);
-      }
+      console.error("Error saving user to database", error);
       return done(error);
     }
   }
