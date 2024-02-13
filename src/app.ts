@@ -7,8 +7,8 @@ import cookieSession from "cookie-session";
 
 // Passport + mongoose configuration
 import * as passportConfig from "./config/passport";
-import { initializeDbConnection } from "./config/db";
-initializeDbConnection();
+import { returnDbClient } from "./clients/db";
+returnDbClient();
 
 // Controllers (route handlers)
 import { authController } from "./controllers/api/auth";
