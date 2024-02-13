@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 export interface UserObject {
   id: string;
@@ -11,15 +11,15 @@ export interface UserObject {
   verificationImageLink?: string[];
 }
 
-const userSchema = new mongoose.Schema<UserObject>({
-  id: String,
-  name: String,
-  provider: String,
-  email: String,
-  images: [String],
-  verified: Boolean,
-  contactNumber: String,
-  verificationImageLink: [String]
+const userSchema = new Schema<UserObject>({
+  id: { type: String, required: true },
+  name: { type: String, required: true },
+  provider: { type: String, required: true },
+  email: { type: String, required: true },
+  images: { type: [String], required: true },
+  verified: { type: Boolean, required: true },
+  contactNumber: { type: String, required: false },
+  verificationImageLink: { type: [String], required: false },
 });
 
-export const User = mongoose.model("User", userSchema);
+export const User = mongoose.model<UserObject>("User", userSchema);
