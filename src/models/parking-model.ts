@@ -31,6 +31,7 @@ const parkingSchema: Schema = new Schema<ParkingObject>({
     street: { type: String, required: true },
     lng: { type: String, required: false },
     lat: { type: String, required: false },
+    state: { type: String, required: true },
     city: { type: String, required: true },
     zip: { type: String, required: true },
     country: { type: String, required: false },

@@ -6,13 +6,13 @@ import passport from "passport";
 import cookieSession from "cookie-session";
 
 // Passport + mongoose configuration
-import * as passportConfig from "./config/passport";
-import { returnDbClient } from "./clients/db";
+import * as passportConfig from "./config/passport-config";
+import { returnDbClient } from "./clients/db-client";
 returnDbClient();
 
 // Controllers (route handlers)
-import { authController } from "./controllers/api/auth";
-import { userController } from "./controllers/api/user";
+import { authController } from "./controllers/api/auth-api";
+import { userController } from "./controllers/api/user-api";
 
 // Create Express server
 const app = express();
