@@ -35,8 +35,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize(passportConfig));
 app.use(passport.session());
 
-app.use("/v1/user", userController);
 app.use("/v1/auth", authController);
+app.use("/v1/user", userController);
 app.use("/v1/parking", parkingController);
 app.use("/v1/s3", s3Controller);
 
@@ -45,7 +45,7 @@ app.use("/v1/s3", s3Controller);
 // Route to /test that sends a form as HTML to upload a file to /v1/parking/upload
 app.get("/test", (req, res) => {
   res.send(`
-    <form action="/v1/s3/upload" method="post" enctype="multipart/form-data">
+    <form action="/v1/s3/upload-single" method="post" enctype="multipart/form-data">
       <input type="file" name="file" />
       <input type="submit" value="Upload" />
     </form>
