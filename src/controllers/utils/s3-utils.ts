@@ -1,13 +1,13 @@
-import AWS, { S3 } from "aws-sdk";
+import { S3 } from "aws-sdk";
 import { returnS3Client } from "../../clients/s3-client";
 
 const s3: S3 = returnS3Client();
 
-export const uploadFileToS3 = (file: File): Promise<string> => {
+export const uploadFileToS3 = (file: Express.Multer.File): Promise<string> => {
   const params: S3.Types.PutObjectRequest = {
-    Bucket: "parkbnb-test",
-    Key: file.name,
-    Body: file,
+    Bucket: process.env.BUCKET_NAME as string,
+    Key: file.originalname,
+    Body: file.buffer,
   };
 
   return s3
@@ -22,4 +22,22 @@ export const uploadFileToS3 = (file: File): Promise<string> => {
       console.error("Error uploading file to S3:", error);
       return Promise.reject("Failed to upload file to S3");
     });
+};
+
+export const downloadFileFromS3 = (key: string): Promise<NodeJS.ReadableStream> => {
+  const params: S3.Types.GetObjectRequest = {
+    Bucket: process.env.BUCKET_NAME as string,
+    Key: key,
+  };
+
+  return new Promise((resolve, reject) => {
+    const stream = s3.getObject(params).createReadStream();
+    stream.on("error", (error) => {
+      console.error("Error downloading file from S3:", error);
+      reject("Failed to download file from S3");
+    });
+    stream.on("end", () => {
+      resolve(stream);
+    });
+  });
 };

@@ -13,6 +13,9 @@ returnDbClient();
 // Controllers (route handlers)
 import { authController } from "./controllers/api/auth-api";
 import { userController } from "./controllers/api/user-api";
+import { parkingController } from "./controllers/api/parking-api";
+// @ts-ignore
+import { s3Controller } from "./controllers/api/s3-api";
 
 // Create Express server
 const app = express();
@@ -34,6 +37,20 @@ app.use(passport.session());
 
 app.use("/v1/user", userController);
 app.use("/v1/auth", authController);
+app.use("/v1/parking", parkingController);
+app.use("/v1/s3", s3Controller);
+
+// Other route handlers...
+
+// Route to /test that sends a form as HTML to upload a file to /v1/parking/upload
+app.get("/test", (req, res) => {
+  res.send(`
+    <form action="/v1/s3/upload" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" />
+      <input type="submit" value="Upload" />
+    </form>
+  `);
+});
 
 app.listen(app.get("port"), () => {
   console.log(
