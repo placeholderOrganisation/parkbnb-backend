@@ -2,13 +2,14 @@ import express, { Request, Response } from "express";
 import Parking, { ParkingObject } from "../../models/parking-model";
 import {
   PartialParkingObject,
+  RequestParkingObject,
   getPartialParkings,
 } from "../utils/parking-utils";
 
 export const parkingController = express.Router();
 
 // Route to get all parkings which are is_available
-parkingController.get("/parkings", async (req: Request, res: Response) => {
+parkingController.get("/parking", async (req: Request, res: Response) => {
   try {
     const parkings: ParkingObject[] = await Parking.find({
       is_available: true,
@@ -20,11 +21,12 @@ parkingController.get("/parkings", async (req: Request, res: Response) => {
     res.status(200).json(partialParkings);
   } catch (error) {
     res.status(500).json({ error: "Failed to get parkings" });
+    throw error; // Add this line
   }
 });
 
 // Route to get a parking given an ID
-parkingController.get("/parkings/:id", async (req: Request, res: Response) => {
+parkingController.get("/parking/:id", async (req: Request, res: Response) => {
   try {
     const parkingId = req.params.id;
     const parking: ParkingObject | null = await Parking.findById(parkingId);
@@ -38,10 +40,10 @@ parkingController.get("/parkings/:id", async (req: Request, res: Response) => {
 });
 
 // Route to update a parking given an ID
-parkingController.put("/parkings/:id", async (req: Request, res: Response) => {
+parkingController.put("/parking/:id", async (req: Request, res: Response) => {
   try {
     const parkingId = req.params.id;
-    const parkingData: ParkingObject = req.body;
+    const parkingData: RequestParkingObject = req.body;
     const updatedParking = await Parking.findByIdAndUpdate(
       parkingId,
       parkingData,
@@ -56,12 +58,15 @@ parkingController.put("/parkings/:id", async (req: Request, res: Response) => {
   }
 });
 
-parkingController.post("/parkings", async (req: Request, res: Response) => {
+parkingController.post("/parking", async (req: Request, res: Response) => {
   try {
     const parkingData: ParkingObject = req.body;
-    const newParking = await Parking.create(parkingData);
+    const newParking = new Parking(parkingData);
+    await newParking.validate();
+    await newParking.save();
     res.status(201).json(newParking);
   } catch (error) {
     res.status(500).json({ error: "Failed to create parking" });
+    throw error; // Add this line
   }
 });

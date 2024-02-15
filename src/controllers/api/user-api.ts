@@ -3,7 +3,7 @@ import { User } from "../../models/user-model";
 
 export const userController = Router();
 
-// Update user route
+// Complete sign up route
 userController.put("/complete-sign-up", async (req, res) => {
 
     const { id, contactInfo } = req.body;

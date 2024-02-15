@@ -14,6 +14,31 @@ export interface PartialParkingObject {
   width?: number;
 }
 
+export interface RequestParkingObject {
+  owner_id?: string;
+  address?: {
+    street?: string;
+    lng?: string;
+    lat?: string;
+    city?: string;
+    state?: string;
+    zip?: string;
+    country?: string;
+  };
+  description?: string;
+  price?: {
+    hourly?: number;
+    daily?: number;
+    monthly?: number;
+    yearly?: number;
+  };
+  is_available?: boolean;
+  images?: string[];
+  created_at?: string;
+  length?: number;
+  width?: number;
+}
+
 export const getPartialParkings = (
   parkings: ParkingObject[]
 ): PartialParkingObject[] => {
