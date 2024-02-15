@@ -1,4 +1,6 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema } from "mongoose";
+
+import { User } from "./user-model";
 
 export interface ParkingObject {
   owner_id: string;
@@ -50,6 +52,20 @@ const parkingSchema: Schema = new Schema<ParkingObject>({
   width: { type: Number, required: true },
 });
 
-const Parking = mongoose.model<ParkingObject>("Parking", parkingSchema);
+parkingSchema.pre<ParkingObject>("save", async function (next) {
+  const owner_id = this.owner_id;
 
-export default Parking;
+  try {
+    const user = await User.findOne({ _id: owner_id });
+
+    if (user) {
+      next();
+    } else {
+      throw new Error("Owner does not exist");
+    }
+  } catch (error) {
+    throw error;
+  }
+});
+
+export const Parking = mongoose.model<ParkingObject>("Parking", parkingSchema);

@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import Parking, { ParkingObject } from "../../models/parking-model";
+import { Parking, ParkingObject } from "../../models/parking-model";
 import {
   PartialParkingObject,
   RequestParkingObject,
@@ -9,7 +9,7 @@ import {
 export const parkingController = express.Router();
 
 // Route to get all parkings which are is_available
-parkingController.get("/parking", async (req: Request, res: Response) => {
+parkingController.get("/", async (req: Request, res: Response) => {
   try {
     const parkings: ParkingObject[] = await Parking.find({
       is_available: true,
@@ -26,7 +26,7 @@ parkingController.get("/parking", async (req: Request, res: Response) => {
 });
 
 // Route to get a parking given an ID
-parkingController.get("/parking/:id", async (req: Request, res: Response) => {
+parkingController.get("/:id", async (req: Request, res: Response) => {
   try {
     const parkingId = req.params.id;
     const parking: ParkingObject | null = await Parking.findById(parkingId);
@@ -40,7 +40,7 @@ parkingController.get("/parking/:id", async (req: Request, res: Response) => {
 });
 
 // Route to update a parking given an ID
-parkingController.put("/parking/:id", async (req: Request, res: Response) => {
+parkingController.put("/:id", async (req: Request, res: Response) => {
   try {
     const parkingId = req.params.id;
     const parkingData: RequestParkingObject = req.body;
@@ -58,7 +58,7 @@ parkingController.put("/parking/:id", async (req: Request, res: Response) => {
   }
 });
 
-parkingController.post("/parking", async (req: Request, res: Response) => {
+parkingController.post("/", async (req: Request, res: Response) => {
   try {
     const parkingData: ParkingObject = req.body;
     const newParking = new Parking(parkingData);
