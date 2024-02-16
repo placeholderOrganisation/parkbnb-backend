@@ -3,23 +3,11 @@ import { Request, Response, Router } from "express";
 import {
   uploadFilesToS3,
   uploadFileToS3,
-  downloadFileFromS3,
 } from "../utils/s3-utils";
 
 const upload = multer();
 
 export const s3Controller = Router();
-
-s3Controller.get("/get/:key", async (req: Request, res: Response) => {
-  try {
-    const key = req.params.key;
-    const readStream: NodeJS.ReadableStream = await downloadFileFromS3(key);
-
-    readStream.pipe(res);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to download file from S3" });
-  }
-});
 
 s3Controller.post(
   "/upload-single",
