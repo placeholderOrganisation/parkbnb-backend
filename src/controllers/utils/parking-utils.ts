@@ -1,17 +1,17 @@
 import { ParkingObject } from "../../models/parking-model";
 
 export interface PartialParkingObject {
-  owner_id?: string;
-  address?: {
-    city?: string;
+  owner_id: string;
+  address: {
+    city: string;
   };
-  price?: {
-    monthly?: number;
+  price: {
+    monthly: number;
   };
-  is_available?: boolean;
-  images?: string[];
-  length?: number;
-  width?: number;
+  is_available: boolean;
+  images: string[];
+  length: number;
+  width: number;
 }
 
 export interface RequestParkingObject {
