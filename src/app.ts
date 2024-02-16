@@ -40,7 +40,17 @@ app.use("/v1/user", userController);
 app.use("/v1/parking", parkingController);
 app.use("/v1/s3", s3Controller);
 
-// Other route handlers...
+// Route used to test app
+app.get("/test-route", (req, res) => {
+  res.status(200).send("Hello, World!");
+});
+
+// Route to return HTML img tag
+app.get("/image", (req, res) => {
+  const imageUrl = "/v1/s3/get/mint_5886845.png";
+  const imgTag = `<img src="${imageUrl}" alt="Image">`;
+  res.send(imgTag);
+});
 
 // Route to /test that sends a form as HTML to upload a file to /v1/parking/upload
 app.get("/test", (req, res) => {
