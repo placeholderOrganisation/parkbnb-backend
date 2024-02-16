@@ -7,7 +7,7 @@
     "build": "tsc",
     "start": "tsc && node dist/server.js",
     "dev": "tsc && nodemon dist/server.js",
-    "test": "jest --forceExit --coverage --verbose"
+    "test": "jest --watchAll"
   },
   "author": "",
   "license": "ISC",
