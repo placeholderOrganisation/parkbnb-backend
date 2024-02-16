@@ -29,7 +29,9 @@ parkingController.get("/", async (req: Request, res: Response) => {
 parkingController.get("/:id", async (req: Request, res: Response) => {
   try {
     const parkingId = req.params.id;
-    const parking: ParkingObject | null = await Parking.findById(parkingId);
+    const parking: ParkingObject | null = await Parking.findOne({
+      id: parkingId,
+    });
     if (!parking) {
       return res.status(404).json({ error: "Parking not found" });
     }
@@ -44,8 +46,8 @@ parkingController.put("/:id", async (req: Request, res: Response) => {
   try {
     const parkingId = req.params.id;
     const parkingData: RequestParkingObject = req.body;
-    const updatedParking = await Parking.findByIdAndUpdate(
-      parkingId,
+    const updatedParking = await Parking.findOneAndUpdate(
+      { id: parkingId },
       parkingData,
       { new: true }
     );
