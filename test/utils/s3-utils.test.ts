@@ -56,6 +56,7 @@ describe("uploadFileToS3", () => {
       Bucket: process.env.BUCKET_NAME,
       Key: "test.txt",
       Body: Buffer.from("test"),
+      ACL: "public-read",
     });
     expect(result).toBe("http://example.com");
   });
@@ -73,6 +74,7 @@ describe("uploadFileToS3", () => {
         Bucket: process.env.BUCKET_NAME,
         Key: "test.txt",
         Body: Buffer.from("test"),
+        ACL: "public-read",
       });
       expect(error).toBe("Failed to upload file to S3");
     }
@@ -102,11 +104,13 @@ describe("uploadFilesToS3", () => {
       Bucket: process.env.BUCKET_NAME,
       Key: "test.txt",
       Body: Buffer.from("test"),
+      ACL: "public-read",
     });
     expect(s3.upload).toHaveBeenCalledWith({
       Bucket: process.env.BUCKET_NAME,
       Key: "test2.txt",
       Body: Buffer.from("test2"),
+      ACL: "public-read",
     });
   });
 
@@ -130,11 +134,13 @@ describe("uploadFilesToS3", () => {
         Bucket: process.env.BUCKET_NAME,
         Key: "test.txt",
         Body: Buffer.from("test"),
+        ACL: "public-read",
       });
       expect(s3.upload).toHaveBeenCalledWith({
         Bucket: process.env.BUCKET_NAME,
         Key: "test2.txt",
         Body: Buffer.from("test2"),
+        ACL: "public-read",
       });
     }
   });

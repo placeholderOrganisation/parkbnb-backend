@@ -8,6 +8,7 @@ export const uploadFileToS3 = (file: Express.Multer.File): Promise<string> => {
     Bucket: process.env.BUCKET_NAME as string,
     Key: file.originalname,
     Body: file.buffer,
+    ACL: "public-read",
   };
 
   return s3
@@ -31,6 +32,7 @@ export const uploadFilesToS3 = (
       Bucket: process.env.BUCKET_NAME as string,
       Key: file.originalname,
       Body: file.buffer,
+      ACL: "public-read",
     };
 
     return s3
