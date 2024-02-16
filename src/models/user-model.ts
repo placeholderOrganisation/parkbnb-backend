@@ -11,6 +11,13 @@ export interface UserObject {
   verificationImageLink?: string[];
 }
 
+export interface PartialUserObject {
+  name: string;
+  images: string[];
+  verified: Boolean;
+  contactNumber?: string;
+}
+
 const userSchema = new Schema<UserObject>({
   id: { type: String, required: true },
   name: { type: String, required: true },
