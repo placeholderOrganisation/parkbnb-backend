@@ -67,3 +67,27 @@ export const getPartialParkings = (
     };
   });
 };
+
+export const initializeEmptyParking = (): ParkingObject => {
+  const newParkingObject: ParkingObject = {
+    owner_id: "",
+    address: {
+      street: "",
+      city: "",
+      state: "",
+      zip: "",
+    },
+    description: "",
+    price: {
+      daily: 0,
+      monthly: 0,
+    },
+    is_available: false,
+    images: [],
+    created_at: "",
+    length: 0,
+    width: 0,
+  };
+
+  return newParkingObject;
+};

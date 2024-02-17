@@ -6,19 +6,19 @@ export interface ParkingObject {
   owner_id: string;
   address: {
     street: string;
-    lng: string;
-    lat: string;
+    lng?: string;
+    lat?: string;
     city: string;
     state: string;
     zip: string;
-    country: string;
+    country?: string;
   };
   description: string;
   price: {
-    hourly: number;
+    hourly?: number;
     daily: number;
     monthly: number;
-    yearly: number;
+    yearly?: number;
   };
   is_available: boolean;
   images: string[];
