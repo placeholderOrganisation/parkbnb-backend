@@ -3,6 +3,7 @@ import {
   handleSocialMediaSignUp,
   assembleNewUserBody,
   initializeEmptyUser,
+  getPartialUserObject
 } from "../../../src/controllers/utils/user-utils";
 import { User } from "../../../src/models/user-model";
 
@@ -124,6 +125,51 @@ describe("initializeEmptyUser", () => {
       email: "",
       images: [],
       verified: false,
+    });
+  });
+});
+
+describe("getPartialUserObject", () => {
+  it("should return a partial user object", () => {
+    const user2 = {
+      id: 2,
+      name: "sid ahluwalia",
+      provider: "facebook",
+      email: "s@g.com",
+      images: ["https://www.google.com"],
+      verified: true,
+      contactNumber: "+16478634180",
+      verification_img: ["https://www.google.com"],
+    };
+
+    const partialUser = getPartialUserObject(user2);
+
+    expect(partialUser).toEqual({
+      name: "sid ahluwalia",
+      images: ["https://www.google.com"],
+      verified: true,
+      contactNumber: "+16478634180",
+    });
+  });
+
+  it("should return a partial user object with null contactNumber", () => {
+    const user2 = {
+      id: 2,
+      name: "sid ahluwalia",
+      provider: "facebook",
+      email: "s@g.com",
+      images: ["https://www.google.com"],
+      verified: true,
+      verification_img: ["https://www.google.com"],
+    };
+
+    const partialUser = getPartialUserObject(user2);
+
+    expect(partialUser).toEqual({
+      name: "sid ahluwalia",
+      images: ["https://www.google.com"],
+      verified: true,
+      contactNumber: null,
     });
   });
 });
