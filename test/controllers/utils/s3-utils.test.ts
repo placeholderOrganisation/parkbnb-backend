@@ -1,5 +1,4 @@
 // @ts-nocheck
-import { get } from "mongoose";
 import {
   s3,
   uploadFileToS3,

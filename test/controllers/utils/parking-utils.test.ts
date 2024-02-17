@@ -2,6 +2,7 @@
 import {
   getPartialParkings,
   PartialParkingObject,
+  initializeEmptyParking,
 } from "../../../src/controllers/utils/parking-utils";
 import { ParkingObject } from "../../../src/models/parking-model";
 
@@ -83,5 +84,33 @@ describe("getPartialParkings", () => {
     const result = getPartialParkings(parkings);
 
     expect(result).toEqual(expectedPartialParkings);
+  });
+});
+
+describe("initializeEmptyParking", () => {
+  it("should return an empty parking object", () => {
+    const expectedEmptyParking = {
+      owner_id: "",
+      address: {
+        street: "",
+        city: "",
+        state: "",
+        zip: "",
+      },
+      description: "",
+      price: {
+        daily: 0,
+        monthly: 0,
+      },
+      is_available: false,
+      images: [],
+      created_at: "",
+      length: 0,
+      width: 0,
+    };
+
+    const result = initializeEmptyParking();
+
+    expect(result).toEqual(expectedEmptyParking);
   });
 });
