@@ -4,9 +4,9 @@ import {
   s3,
   uploadFileToS3,
   uploadFilesToS3,
-} from "../../src/controllers/utils/s3-utils";
+} from "../../../src/controllers/utils/s3-utils";
 
-jest.mock("../../src/clients/s3-client", () => {
+jest.mock("../../../src/clients/s3-client", () => {
   return {
     returnS3Client: jest.fn().mockReturnValue({
       upload: jest.fn().mockReturnThis(),
