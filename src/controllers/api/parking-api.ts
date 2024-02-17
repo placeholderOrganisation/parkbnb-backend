@@ -65,7 +65,7 @@ parkingController.put("/:id", async (req: Request, res: Response) => {
 parkingController.post("/", async (req: Request, res: Response) => {
   try {
     const parkingData: ParkingObject = req.body;
-    if (!parkingData) {
+    if (!parkingData || Object.keys(parkingData).length === 0) {
       return res.status(400).json({ message: "Parking data is required" });
     }
     await Parking.validate(parkingData);
