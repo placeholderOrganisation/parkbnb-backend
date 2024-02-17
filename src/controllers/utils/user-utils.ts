@@ -1,4 +1,3 @@
-import ValidationError from "mongoose";
 import { DoneCallback, Profile } from "passport";
 import { User, UserObject } from "../../models/user-model";
 
@@ -17,29 +16,22 @@ export const handleSocialMediaSignUp = async (
   const existingUser = await User.findOne({ id: userObj.id });
 
   if (existingUser) {
-    console.info("User already exists in the database");
     return done(null, profile);
   } else {
     try {
-      const newUser = new User(userObj);
-
       // Validate the user data before saving
-      await newUser.validate();
+      await User.validate(userObj);
 
-      // If validation passes, save the user to the database
-      await newUser.save();
-
-      console.info("saved user to database");
+      await User.create(userObj);
 
       return done(null, profile);
     } catch (error) {
-      console.error("Error saving user to database", error);
       return done(error);
     }
   }
 };
 
-const assembleNewUserBody = (profile: Profile): UserObject => {
+export const assembleNewUserBody = (profile: Profile): UserObject => {
   const newUser: UserObject = initializeEmptyUser();
   newUser.id = profile.id;
   newUser.name = profile.displayName;
@@ -51,7 +43,7 @@ const assembleNewUserBody = (profile: Profile): UserObject => {
   return newUser;
 };
 
-const initializeEmptyUser = (): UserObject => {
+export const initializeEmptyUser = (): UserObject => {
   const newUserObject: UserObject = {
     id: "",
     name: "",
@@ -59,8 +51,6 @@ const initializeEmptyUser = (): UserObject => {
     email: "",
     images: [],
     verified: false,
-    contactNumber: "",
-    verificationImageLink: [],
   };
 
   return newUserObject;

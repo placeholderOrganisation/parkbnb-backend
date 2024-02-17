@@ -63,9 +63,8 @@ parkingController.put("/:id", async (req: Request, res: Response) => {
 parkingController.post("/", async (req: Request, res: Response) => {
   try {
     const parkingData: ParkingObject = req.body;
-    const newParking = new Parking(parkingData);
-    await newParking.validate();
-    await newParking.save();
+    await Parking.validate(parkingData);
+    const newParking = await Parking.create(parkingData);
     res.status(201).json(newParking);
   } catch (error) {
     res.status(500).json({ error: "Failed to create parking" });
