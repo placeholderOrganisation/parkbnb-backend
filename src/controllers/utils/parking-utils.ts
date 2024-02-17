@@ -43,29 +43,35 @@ export const getPartialParkings = (
   parkings: ParkingObject[]
 ): PartialParkingObject[] => {
   return parkings.map((parking) => {
-    const {
-      owner_id,
-      address,
-      price,
-      is_available,
-      images,
-      length,
-      width,
-    } = parking;
-    return {
-      owner_id,
-      address: {
-        city: address.city,
-      },
-      price: {
-        monthly: price.monthly,
-      },
-      is_available,
-      images,
-      length,
-      width,
-    };
+    return getPartialParkingObject(parking);
   });
+};
+
+export const getPartialParkingObject = (
+  parking: ParkingObject
+): PartialParkingObject => {
+  const {
+    owner_id,
+    address,
+    price,
+    is_available,
+    images,
+    length,
+    width,
+  } = parking;
+  return {
+    owner_id,
+    address: {
+      city: address.city,
+    },
+    price: {
+      monthly: price.monthly,
+    },
+    is_available,
+    images,
+    length,
+    width,
+  };
 };
 
 export const initializeEmptyParking = (): ParkingObject => {

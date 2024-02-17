@@ -21,7 +21,7 @@ parkingController.get("/", async (req: Request, res: Response) => {
     res.status(200).json(partialParkings);
   } catch (error) {
     res.status(500).json({ error: "Failed to get parkings" });
-    throw error; // Add this line
+    throw error;
   }
 });
 
