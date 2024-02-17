@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
-import { PartialUserObject, User } from "../../models/user-model";
+import { PartialUserObject, User, UserObject } from "../../models/user-model";
+import { getPartialUserObject } from "../utils/user-utils";
 
 export const userController = express.Router();
 
@@ -29,25 +30,28 @@ userController.put("/complete-sign-up", async (req: Request, res: Response) => {
     existingUser.contactNumber = contactInfo;
 
     // Save the updated user
-    await existingUser.save();
+    await User.updateOne({ id }, existingUser);
 
     res.status(204).json({ message: "User updated successfully" });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
 
 // Route to get a User given an ID
 userController.get("/:id", async (req: Request, res: Response) => {
+  const userId = req.params.id;
+  if (!userId || userId === "") {
+    return res.status(400).json({ message: "Missing required fields" });
+  }
   try {
-    const userId = req.params.id;
-    const user: PartialUserObject | null = await User.findOne({ id: userId });
+    const user: UserObject | null = await User.findOne({ id: userId });
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ message: "User not found" });
     }
-    res.status(200).json(user);
+    const partialUser: PartialUserObject = getPartialUserObject(user);
+    res.status(200).json(partialUser);
   } catch (error) {
-    res.status(500).json({ error: "Failed to get parking" });
+    res.status(500).json({ message: "Internal server error" });
   }
 });

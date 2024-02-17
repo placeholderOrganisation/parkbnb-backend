@@ -1,5 +1,5 @@
 import { DoneCallback, Profile } from "passport";
-import { User, UserObject } from "../../models/user-model";
+import { PartialUserObject, User, UserObject } from "../../models/user-model";
 
 /**
  * Save user signing up via google or facebook in the database.
@@ -54,4 +54,15 @@ export const initializeEmptyUser = (): UserObject => {
   };
 
   return newUserObject;
+};
+
+export const getPartialUserObject = (user: UserObject): PartialUserObject => {
+  const partialUser: PartialUserObject = {
+    name: user.name,
+    images: user.images,
+    verified: user.verified,
+    contactNumber: user.contactNumber || null,
+  };
+
+  return partialUser;
 };
