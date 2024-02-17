@@ -20,8 +20,7 @@ parkingController.get("/", async (req: Request, res: Response) => {
 
     res.status(200).json(partialParkings);
   } catch (error) {
-    res.status(500).json({ error: "Failed to get parkings" });
-    throw error;
+    res.status(500).json({ message: "Failed to get parkings" });
   }
 });
 
@@ -33,11 +32,11 @@ parkingController.get("/:id", async (req: Request, res: Response) => {
       id: parkingId,
     });
     if (!parking) {
-      return res.status(404).json({ error: "Parking not found" });
+      return res.status(404).json({ message: "Parking not found" });
     }
     res.status(200).json(parking);
   } catch (error) {
-    res.status(500).json({ error: "Failed to get parking" });
+    res.status(500).json({ message: "Failed to get parking" });
   }
 });
 
@@ -46,28 +45,33 @@ parkingController.put("/:id", async (req: Request, res: Response) => {
   try {
     const parkingId = req.params.id;
     const parkingData: RequestParkingObject = req.body;
-    const updatedParking = await Parking.findOneAndUpdate(
+    if (!parkingData || Object.keys(parkingData).length === 0) {
+      return res.status(400).json({ message: "Parking data is required" });
+    }
+    const updatedParking: ParkingObject | null = await Parking.findOneAndUpdate(
       { id: parkingId },
       parkingData,
       { new: true }
     );
     if (!updatedParking) {
-      return res.status(404).json({ error: "Parking not found" });
+      return res.status(404).json({ message: "Parking not found" });
     }
     res.status(200).json(updatedParking);
   } catch (error) {
-    res.status(500).json({ error: "Failed to update parking" });
+    res.status(500).json({ message: "Failed to update parking" });
   }
 });
 
 parkingController.post("/", async (req: Request, res: Response) => {
   try {
     const parkingData: ParkingObject = req.body;
+    if (!parkingData) {
+      return res.status(400).json({ message: "Parking data is required" });
+    }
     await Parking.validate(parkingData);
     const newParking = await Parking.create(parkingData);
     res.status(201).json(newParking);
   } catch (error) {
-    res.status(500).json({ error: "Failed to create parking" });
-    throw error; // Add this line
+    res.status(500).json({ message: "Failed to create parking" });
   }
 });
