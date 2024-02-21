@@ -3,7 +3,13 @@ import { ParkingObject } from "../../models/parking-model";
 export interface PartialParkingObject {
   owner_id: string;
   address: {
+    lat: string;
+    lng: string;
+    street: string;
     city: string;
+    state: string;
+    zip: string;
+    country: string;
   };
   price: {
     monthly: number;
@@ -62,7 +68,13 @@ export const getPartialParkingObject = (
   return {
     owner_id,
     address: {
+      lat: address.lat,
+      lng: address.lng,
+      street: address.street,
       city: address.city,
+      state: address.state,
+      zip: address.zip,
+      country: address.country,
     },
     price: {
       monthly: price.monthly,
