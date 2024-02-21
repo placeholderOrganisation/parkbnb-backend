@@ -14,6 +14,8 @@ returnDbClient();
 import { authController } from "./controllers/api/auth-api";
 import { userController } from "./controllers/api/user-api";
 import { parkingController } from "./controllers/api/parking-api";
+import { storageSpaceController } from "./controllers/api/storagespace-api";
+
 // @ts-ignore
 import { s3Controller } from "./controllers/api/s3-api";
 
@@ -38,6 +40,7 @@ app.use(passport.session());
 app.use("/v1/auth", authController);
 app.use("/v1/user", userController);
 app.use("/v1/parking", parkingController);
+app.use("/v1/storagespace", storageSpaceController);
 app.use("/v1/s3", s3Controller);
 
 // Route used to test app
@@ -47,7 +50,7 @@ app.get("/test-route", (req, res) => {
 
 // Route to return HTML img tag
 app.get("/image", (req, res) => {
-  const imageUrl = "/v1/s3/get/mint_5886845.png";
+  const imageUrl = "https://parkbnb-test.s3.us-east-2.amazonaws.com/engagement%20%281%29.jpg";
   const imgTag = `<img src="${imageUrl}" alt="Image">`;
   res.send(imgTag);
 });
