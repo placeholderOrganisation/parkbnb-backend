@@ -5,12 +5,12 @@ export interface ParkingObject {
   owner_id: string;
   address: {
     street: string;
-    lng?: string;
-    lat?: string;
+    lng: string;
+    lat: string;
     city: string;
     state: string;
     zip: string;
-    country?: string;
+    country: string;
   };
   description: string;
   price: {
@@ -30,12 +30,12 @@ const parkingSchema: Schema = new Schema<ParkingObject>({
   owner_id: { type: String, required: true },
   address: {
     street: { type: String, required: true },
-    lng: { type: String, required: false },
-    lat: { type: String, required: false },
+    lng: { type: String, required: true },
+    lat: { type: String, required: true },
     state: { type: String, required: true },
     city: { type: String, required: true },
     zip: { type: String, required: true },
-    country: { type: String, required: false },
+    country: { type: String, required: true },
   },
   description: { type: String, required: true },
   price: {

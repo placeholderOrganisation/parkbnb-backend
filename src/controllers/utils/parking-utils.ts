@@ -78,10 +78,13 @@ export const initializeEmptyParking = (): ParkingObject => {
   const newParkingObject: ParkingObject = {
     owner_id: "",
     address: {
+      lat: "",
+      lng: "",
       street: "",
       city: "",
       state: "",
       zip: "",
+      country: "",
     },
     description: "",
     price: {

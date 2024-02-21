@@ -136,10 +136,13 @@ describe("initializeEmptyParking", () => {
     const expectedEmptyParking = {
       owner_id: "",
       address: {
+        lat: "",
+        lng: "",
         street: "",
         city: "",
         state: "",
         zip: "",
+        country: "",
       },
       description: "",
       price: {
