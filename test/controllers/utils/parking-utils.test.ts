@@ -97,7 +97,7 @@ const expectedPartialParkings: PartialParkingObject[] = [
 ];
 
 describe("getPartialParkingObject", () => {
-  it("should return an array of partial parking objects", () => {
+  it("should return a partial parking objects", () => {
     const result: PartialParkingObject = getPartialParkingObject(parking1);
 
     expect(result).toEqual(expectedPartialParking1);

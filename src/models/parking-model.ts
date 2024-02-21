@@ -21,9 +21,9 @@ export interface ParkingObject {
   };
   is_available: boolean;
   images: string[];
-  created_at: string;
   length: number;
   width: number;
+  created_at: string;
 }
 
 const parkingSchema: Schema = new Schema<ParkingObject>({
