@@ -18,6 +18,7 @@ import { storageSpaceController } from "./controllers/api/storagespace-api";
 
 // @ts-ignore
 import { s3Controller } from "./controllers/api/s3-api";
+import { mapBoxController } from "./controllers/api/mapbox-api";
 
 // Create Express server
 const app = express();
@@ -42,6 +43,7 @@ app.use("/v1/user", userController);
 app.use("/v1/parking", parkingController);
 app.use("/v1/storagespace", storageSpaceController);
 app.use("/v1/s3", s3Controller);
+app.use("/v1/mapbox", mapBoxController);
 
 // Route used to test app
 app.get("/test-route", (req, res) => {
@@ -50,7 +52,8 @@ app.get("/test-route", (req, res) => {
 
 // Route to return HTML img tag
 app.get("/image", (req, res) => {
-  const imageUrl = "https://parkbnb-test.s3.us-east-2.amazonaws.com/engagement%20%281%29.jpg";
+  const imageUrl =
+    "https://parkbnb-test.s3.us-east-2.amazonaws.com/engagement%20%281%29.jpg";
   const imgTag = `<img src="${imageUrl}" alt="Image">`;
   res.send(imgTag);
 });
