@@ -1,38 +1,31 @@
 import express, { Request, Response } from "express";
-import { PartialUserObject, User, UserObject } from "../../models/user-model";
 import { getPartialUserObject } from "../utils/user-utils";
+import {
+  PartialUserObject,
+  RequestUserObject,
+  User,
+  UserObject,
+} from "../../models/user-model";
 
 export const userController = express.Router();
 
-// Complete sign up route
-userController.put("/complete-sign-up", async (req: Request, res: Response) => {
-  const { id, contactInfo } = req.body;
-
-  if (!id || !contactInfo) {
-    return res.status(400).json({ message: "Missing required fields" });
-  }
-
+// Route to update a User given an ID
+userController.put("/:id", async (req: Request, res: Response) => {
   try {
-    // Find the user by ID
-    const existingUser = await User.findOne({ id });
-
-    if (!existingUser) {
+    const userId = req.params.id;
+    const userData: RequestUserObject = req.body;
+    if (!userData || Object.keys(userData).length === 0 || userData.id) {
+      return res.status(400).json({ message: "User data is required" });
+    }
+    const updatedUser: UserObject | null = await User.findOneAndUpdate(
+      { id: userId },
+      userData,
+      { new: true }
+    );
+    if (!updatedUser) {
       return res.status(404).json({ message: "User not found" });
     }
-
-    if (existingUser.contactNumber) {
-      return res
-        .status(400)
-        .json({ message: "User already completed sign up" });
-    }
-
-    // Update the user's contact information
-    existingUser.contactNumber = contactInfo;
-
-    // Save the updated user
-    await User.updateOne({ id }, existingUser);
-
-    res.status(204).json({ message: "User updated successfully" });
+    res.status(200).json(updatedUser);
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }

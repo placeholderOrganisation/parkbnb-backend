@@ -9,6 +9,19 @@ export interface UserObject {
   verified: Boolean;
   contactNumber?: string;
   verificationImageLink?: string[];
+  passwordHash?: string;
+}
+
+export interface RequestUserObject {
+  id: string;
+  name: string;
+  provider: string;
+  email: string;
+  images: string[];
+  verified: Boolean;
+  contactNumber?: string;
+  verificationImageLink?: string[];
+  passwordHash?: string;
 }
 
 export interface PartialUserObject {
@@ -27,6 +40,7 @@ const userSchema = new Schema<UserObject>({
   verified: { type: Boolean, required: true },
   contactNumber: { type: String, required: false },
   verificationImageLink: { type: [String], required: false },
+  passwordHash: { type: String, required: false },
 });
 
 export const User = mongoose.model<UserObject>("User", userSchema);

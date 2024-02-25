@@ -59,10 +59,21 @@ app.get("/image", (req, res) => {
 });
 
 // Route to /test that sends a form as HTML to upload a file to /v1/parking/upload
-app.get("/test", (req, res) => {
+app.get("/test/s3", (req, res) => {
   res.send(`
     <form action="/v1/s3/upload-single" method="post" enctype="multipart/form-data">
       <input type="file" name="file" />
+      <input type="submit" value="Upload" />
+    </form>
+  `);
+});
+
+// Route to /test that sends a form as HTML to upload a file to /v1/parking/upload
+app.get("/test/auth", (req, res) => {
+  res.send(`
+    <form action="/v1/auth/local" method="post">
+      <input type="text" name="username" />
+      <input type="text" name="password" />
       <input type="submit" value="Upload" />
     </form>
   `);

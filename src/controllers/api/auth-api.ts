@@ -56,3 +56,11 @@ authController.get(
     failureRedirect: process.env.FAILURE_REDIRECT,
   })
 );
+
+authController.post(
+  "/local",
+  passport.authenticate("local", {
+    successRedirect: process.env.SUCCESS_REDIRECT,
+    failureRedirect: process.env.FAILURE_REDIRECT,
+  })
+);

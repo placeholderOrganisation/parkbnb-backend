@@ -3,9 +3,12 @@ require("dotenv").config();
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { Strategy as FacebookStrategy } from "passport-facebook";
+import { Strategy as LocalStrategy } from "passport-local";
 
-import { handleSocialMediaSignUp } from "../controllers/utils/user-utils";
-
+import {
+  handleRegularSignUp,
+  handleSocialMediaSignUp,
+} from "../controllers/utils/user-utils";
 
 passport.use(
   new GoogleStrategy(
@@ -52,6 +55,12 @@ passport.use(
       handleSocialMediaSignUp(profile, done);
     }
   )
+);
+
+passport.use(
+  new LocalStrategy(function (username, password, done) {
+    handleRegularSignUp(username, password, done);
+  })
 );
 
 passport.serializeUser((user, done) => {

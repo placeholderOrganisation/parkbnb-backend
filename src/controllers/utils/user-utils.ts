@@ -1,3 +1,5 @@
+import bcrypt from "bcrypt";
+import { v4 as uuid } from "uuid";
 import { DoneCallback, Profile } from "passport";
 import { PartialUserObject, User, UserObject } from "../../models/user-model";
 
@@ -16,15 +18,51 @@ export const handleSocialMediaSignUp = async (
   const existingUser = await User.findOne({ id: userObj.id });
 
   if (existingUser) {
-    return done(null, profile);
+    return done(null, existingUser);
   } else {
     try {
       // Validate the user data before saving
       await User.validate(userObj);
 
-      await User.create(userObj);
+      const newUser = await User.create(userObj);
 
-      return done(null, profile);
+      return done(null, newUser);
+    } catch (error) {
+      return done(error);
+    }
+  }
+};
+
+// TODO: Add Tests
+export const handleRegularSignUp = async (
+  email: string,
+  password: string,
+  done: DoneCallback
+) => {
+  const newProfile: Profile = {
+    id: uuid(),
+    displayName: email,
+    provider: "local",
+    emails: [{ value: email }],
+    photos: [],
+  };
+  const userObj: UserObject = assembleNewUserBody(newProfile);
+
+  const existingUser = await User.findOne({ email: userObj.email });
+
+  if (existingUser) {
+    return done(null, existingUser);
+  } else {
+    try {
+      const passwordHash: string = (await hashPassword(password)) || password;
+      userObj.passwordHash = passwordHash;
+
+      // Validate the user data before saving
+      await User.validate(userObj);
+
+      const newUser = await User.create(userObj);
+
+      return done(null, newUser);
     } catch (error) {
       return done(error);
     }
@@ -65,4 +103,15 @@ export const getPartialUserObject = (user: UserObject): PartialUserObject => {
   };
 
   return partialUser;
+};
+
+// TODO: Add Tests
+const hashPassword = async (password: string): Promise<string> => {
+  try {
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    return hashedPassword;
+  } catch (error) {
+    return password;
+  }
 };
