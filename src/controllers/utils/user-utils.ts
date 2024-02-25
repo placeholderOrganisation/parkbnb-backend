@@ -51,7 +51,15 @@ export const handleRegularSignUp = async (
   const existingUser = await User.findOne({ email: userObj.email });
 
   if (existingUser) {
-    return done(null, existingUser);
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      existingUser.passwordHash
+    );
+    if (isPasswordCorrect) {
+      return done(null, existingUser);
+    } else {
+      return done(null, false);
+    }
   } else {
     try {
       const passwordHash: string = (await hashPassword(password)) || password;

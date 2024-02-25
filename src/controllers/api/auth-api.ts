@@ -11,7 +11,7 @@ authController.get("/login/success", (req: Request, res: Response) => {
       user: req.user,
     });
   }
-  return res.status(201).json({
+  return res.status(403).json({
     success: false,
     message: "unsuccessful",
     user: null,
