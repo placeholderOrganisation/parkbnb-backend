@@ -68,7 +68,7 @@ app.get("/test/s3", (req, res) => {
   `);
 });
 
-// Route to /test that sends a form as HTML to upload a file to /v1/parking/upload
+// Route to test auth
 app.get("/test/auth", (req, res) => {
   res.send(`
     <form action="/v1/auth/local" method="post">

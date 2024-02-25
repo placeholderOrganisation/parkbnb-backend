@@ -12,6 +12,22 @@ export interface UserObject {
   passwordHash?: string;
 }
 
+export interface AssembleNewUserBodyObject {
+  id?: string;
+  displayName: string;
+  provider?: string;
+  emails?: Array<{ value: string }>;
+  userEmail?: string;
+  photos?: string[] | undefined;
+  passwordHash?: string;
+}
+
+export interface UserSignupRequestObject {
+  displayName: string;
+  userEmail: string;
+  password: string;
+}
+
 export interface RequestUserObject {
   id?: string;
   name?: string;

@@ -6,7 +6,7 @@ import { Strategy as FacebookStrategy } from "passport-facebook";
 import { Strategy as LocalStrategy } from "passport-local";
 
 import {
-  handleRegularSignUp,
+  handleRegularSignIn,
   handleSocialMediaSignUp,
 } from "../controllers/utils/user-utils";
 
@@ -59,7 +59,7 @@ passport.use(
 
 passport.use(
   new LocalStrategy(function (username, password, done) {
-    handleRegularSignUp(username, password, done);
+    handleRegularSignIn(username, password, done);
   })
 );
 
