@@ -72,7 +72,7 @@ app.get("/test/s3", (req, res) => {
 app.get("/test/auth", (req, res) => {
   res.send(`
     <form action="/v1/auth/local" method="post">
-      <input type="text" name="username" />
+      <input type="text" name="userEmail" />
       <input type="text" name="password" />
       <input type="submit" value="Upload" />
     </form>

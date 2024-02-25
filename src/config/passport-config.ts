@@ -58,8 +58,12 @@ passport.use(
 );
 
 passport.use(
-  new LocalStrategy(function (username, password, done) {
-    handleRegularSignIn(username, password, done);
+  new LocalStrategy({ usernameField: "userEmail" }, function (
+    userEmail,
+    password,
+    done
+  ) {
+    handleRegularSignIn(userEmail, password, done);
   })
 );
 
