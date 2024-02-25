@@ -41,7 +41,7 @@ export const handleRegularSignUp = async (
 ) => {
   const newProfile: Profile = {
     id: uuid(),
-    displayName: email,
+    displayName: "",
     provider: "local",
     emails: [{ value: email }],
     photos: [],

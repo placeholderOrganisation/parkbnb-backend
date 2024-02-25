@@ -13,12 +13,12 @@ export interface UserObject {
 }
 
 export interface RequestUserObject {
-  id: string;
-  name: string;
-  provider: string;
-  email: string;
-  images: string[];
-  verified: Boolean;
+  id?: string;
+  name?: string;
+  provider?: string;
+  email?: string;
+  images?: string[];
+  verified?: Boolean;
   contactNumber?: string;
   verificationImageLink?: string[];
   passwordHash?: string;
