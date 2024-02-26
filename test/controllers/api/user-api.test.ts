@@ -14,6 +14,7 @@ const testUser = {
 };
 
 const testPartialUser = {
+  id: "123",
   name: "saksham ahluwalia",
   images: ["https://www.google.com"],
   verified: true,

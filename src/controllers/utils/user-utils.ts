@@ -109,6 +109,7 @@ export const initializeEmptyUser = (): UserObject => {
 
 export const getPartialUserObject = (user: UserObject): PartialUserObject => {
   const partialUser: PartialUserObject = {
+    id: user.id,
     name: user.name,
     images: user.images,
     verified: user.verified,

@@ -12,6 +12,26 @@ export interface UserObject {
   passwordHash?: string;
 }
 
+export interface RequestUserObject {
+  id?: string;
+  name?: string;
+  provider?: string;
+  email?: string;
+  images?: string[];
+  verified?: Boolean;
+  contactNumber?: string;
+  verificationImageLink?: string[];
+  passwordHash?: string;
+}
+
+export interface PartialUserObject {
+  id: string;
+  name: string;
+  images: string[];
+  verified: Boolean;
+  contactNumber?: string;
+}
+
 export interface AssembleNewUserBodyObject {
   id?: string;
   displayName: string;
@@ -26,25 +46,6 @@ export interface UserSignupRequestObject {
   displayName: string;
   userEmail: string;
   password: string;
-}
-
-export interface RequestUserObject {
-  id?: string;
-  name?: string;
-  provider?: string;
-  email?: string;
-  images?: string[];
-  verified?: Boolean;
-  contactNumber?: string;
-  verificationImageLink?: string[];
-  passwordHash?: string;
-}
-
-export interface PartialUserObject {
-  name: string;
-  images: string[];
-  verified: Boolean;
-  contactNumber?: string;
 }
 
 const userSchema = new Schema<UserObject>({
