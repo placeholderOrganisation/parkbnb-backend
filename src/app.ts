@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+import cors from "cors";
 import express from "express";
 import bodyParser from "body-parser";
 import passport from "passport";
@@ -23,6 +24,7 @@ import { mapBoxController } from "./controllers/api/mapbox-api";
 // Create Express server
 const app = express();
 
+app.use(cors());
 app.use(
   cookieSession({
     name: "session",
