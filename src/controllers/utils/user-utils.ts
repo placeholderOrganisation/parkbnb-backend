@@ -63,7 +63,7 @@ export const handleRegularSignIn = async (
     }
   } else {
     // User not found
-    console.error("User not found with email: ");
+    console.error("User not found with email: email");
     return done(null, false);
   }
 };
