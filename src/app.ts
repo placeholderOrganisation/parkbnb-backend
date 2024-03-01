@@ -24,7 +24,14 @@ import { mapBoxController } from "./controllers/api/mapbox-api";
 // Create Express server
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [process.env.CLIENT_URL, "https://checkout.stripe.com"],
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
+  })
+);
+
 app.use(
   cookieSession({
     name: "session",
