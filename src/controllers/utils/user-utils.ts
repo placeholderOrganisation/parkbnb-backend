@@ -75,7 +75,7 @@ export const assembleNewUserBody = (
 
   let email = "";
   if (profile.provider === "facebook" || profile.provider === "google") {
-    email = profile.emails[0].value;
+    email = profile.emails ? profile.emails[0].value : "no email found";
   } else {
     email = profile.userEmail;
   }
