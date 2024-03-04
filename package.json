@@ -2,11 +2,11 @@
   "name": "back_end",
   "version": "1.0.0",
   "description": "backend for parkbnb",
-  "main": "dist/src/server.js",
+  "main": "server.ts",
   "scripts": {
     "build": "tsc",
-    "start": "tsc && nodemon dist/server.js",
-    "dev": "tsc && nodemon dist/server.js",
+    "start": "nodemon",
+    "dev": "nodemon",
     "test": "jest --watchAll"
   },
   "author": "",
@@ -49,6 +49,7 @@
     "nodemon": "^3.0.3",
     "supertest": "^6.3.4",
     "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   }
 }
