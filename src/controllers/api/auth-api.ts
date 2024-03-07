@@ -39,8 +39,8 @@ authController.get(
 authController.get(
   "/google/callback",
   passport.authenticate("google", {
-    successRedirect: process.env.SUCCESS_REDIRECT,
-    failureRedirect: process.env.FAILURE_REDIRECT,
+    successRedirect: process.env.SUCCESS_REDIRECT_FOR_SOCIAL,
+    failureRedirect: process.env.FAILURE_REDIRECT_FOR_SOCIAL,
   })
 );
 
@@ -52,15 +52,15 @@ authController.get(
 authController.get(
   "/facebook/callback",
   passport.authenticate("facebook", {
-    successRedirect: process.env.SUCCESS_REDIRECT,
-    failureRedirect: process.env.FAILURE_REDIRECT,
+    successRedirect: process.env.SUCCESS_REDIRECT_FOR_SOCIAL,
+    failureRedirect: process.env.FAILURE_REDIRECT_FOR_SOCIAL,
   })
 );
 
 authController.post(
   "/local",
   passport.authenticate("local", {
-    successRedirect: process.env.SUCCESS_REDIRECT,
-    failureRedirect: process.env.FAILURE_REDIRECT,
+    successRedirect: process.env.SUCCESS_REDIRECT_FOR_LOCAL,
+    failureRedirect: process.env.FAILURE_REDIRECT_FOR_LOCAL,
   })
 );
