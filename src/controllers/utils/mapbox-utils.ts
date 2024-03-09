@@ -40,6 +40,8 @@ export const geocode = (input: string): GeocodeUtilFunctionResponse => {
       });
   });
 
+  // This block is responsible for sending the actual results from this function
+  // Atleast one of the provider sshould send a success response
   // @ts-ignore
   return Promise.all(geocodeClientResponsePromises).then((responses) => {
     const successResponse = responses.find(

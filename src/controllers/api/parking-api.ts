@@ -63,8 +63,8 @@ parkingController.put("/:id", async (req: Request, res: Response) => {
 });
 
 parkingController.post("/", async (req: Request, res: Response) => {
+  const parkingData: ParkingObject = req.body;
   try {
-    const parkingData: ParkingObject = req.body;
     if (!parkingData || Object.keys(parkingData).length === 0) {
       return res.status(400).json({ message: "Parking data is required" });
     }
@@ -72,6 +72,9 @@ parkingController.post("/", async (req: Request, res: Response) => {
     const newParking = await Parking.create(parkingData);
     res.status(201).json(newParking);
   } catch (error) {
-    res.status(500).json({ message: "Failed to create parking" });
+    if (parkingData.is_scraped) {
+      console.log('error', error)
+    }
+    res.status(500).json({ message: "Failed to create parking", error });
   }
 });
