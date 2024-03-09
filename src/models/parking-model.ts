@@ -74,25 +74,42 @@ const parkingSchema: Schema = new Schema<ParkingObject>({
 });
 
 parkingSchema.pre<ParkingObject>("save", async function (next) {
-  const owner_id = this.owner_id;
+  const lat = this.address.lat;
+  const lng = this.address.lng;
 
   const isScrapedListing = this.is_scraped;
   const contact = this.contact;
 
+  const owner_id = this.owner_id;
+
   try {
+    let isExisting = await Parking.findOne({
+      "address.lat": lat,
+      "address.lng": lng,
+    });
     if (isScrapedListing) {
+      if (isExisting) {
+        throw new Error("Duplicate scraped listing found");
+      }
       if (contact) {
         next();
       }
       throw new Error("Contact should exist for scraped listing");
-    }
-
-    const user = await User.findOne({ _id: owner_id });
-
-    if (user) {
-      next();
     } else {
-      throw new Error("Owner should exist for each listing");
+      const user = await User.findOne({ _id: owner_id });
+      isExisting = await Parking.findOne({
+        "address.lat": lat,
+        "address.lng": lng,
+        owner_id,
+      });
+      if (isExisting) {
+        throw new Error("Duplicate listing found");
+      }
+      if (user) {
+        next();
+      } else {
+        throw new Error("Owner should exist for each listing");
+      }
     }
   } catch (error) {
     throw error;
