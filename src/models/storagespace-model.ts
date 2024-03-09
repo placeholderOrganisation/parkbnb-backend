@@ -23,7 +23,7 @@ export interface StorageSpaceObject {
   images: string[];
   length: number;
   width: number;
-  created_at: string;
+  listed_on: string;
 }
 
 const storageSpaceSchema: Schema = new Schema<StorageSpaceObject>({
@@ -46,7 +46,7 @@ const storageSpaceSchema: Schema = new Schema<StorageSpaceObject>({
   },
   is_available: { type: Boolean, required: true },
   images: { type: [String], required: true },
-  created_at: { type: String, required: true },
+  listed_on: { type: String, required: true },
   length: { type: Number, required: true },
   width: { type: Number, required: true },
 });
@@ -60,7 +60,7 @@ storageSpaceSchema.pre<StorageSpaceObject>("save", async function (next) {
     if (user) {
       next();
     } else {
-      throw new Error("Owner does not exist");
+      throw new Error("Owner should exist for each listing");
     }
   } catch (error) {
     throw error;

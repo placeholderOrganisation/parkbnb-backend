@@ -40,7 +40,7 @@ export interface RequestParkingObject {
   };
   is_available?: boolean;
   images?: string[];
-  created_at?: string;
+  listed_on?: string;
   length?: number;
   width?: number;
 }
@@ -56,15 +56,8 @@ export const getPartialParkings = (
 export const getPartialParkingObject = (
   parking: ParkingObject
 ): PartialParkingObject => {
-  const {
-    owner_id,
-    address,
-    price,
-    is_available,
-    images,
-    length,
-    width,
-  } = parking;
+  const { owner_id, address, price, is_available, images, filters } = parking;
+  const { length, width } = filters;
   return {
     owner_id,
     address: {
@@ -89,6 +82,17 @@ export const getPartialParkingObject = (
 export const initializeEmptyParking = (): ParkingObject => {
   const newParkingObject: ParkingObject = {
     owner_id: "",
+    filters: {
+      security_cameras: false,
+      "24/7 access": false,
+      ev_charging: false,
+      handicap_accessible: false,
+      storage_type: "",
+      vehicle_type: "",
+      length: 0,
+      width: 0,
+      spaces: 0,
+    },
     address: {
       lat: "",
       lng: "",
@@ -105,9 +109,9 @@ export const initializeEmptyParking = (): ParkingObject => {
     },
     is_available: false,
     images: [],
-    created_at: "",
-    length: 0,
-    width: 0,
+    listed_on: "",
+    is_scraped: false,
+    contact: "",
   };
 
   return newParkingObject;

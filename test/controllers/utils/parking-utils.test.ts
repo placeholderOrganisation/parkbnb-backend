@@ -10,6 +10,17 @@ import { ParkingObject } from "../../../src/models/parking-model";
 const parking1 = {
   parking_id: 1,
   owner_id: "1",
+  filters: {
+    security_cameras: true,
+    "24/7 access": true,
+    ev_charging: true,
+    handicap_accessible: true,
+    storage_type: "outdoor",
+    vehicle_type: "sedan / suv",
+    length: 5,
+    width: 3,
+    spaces: 1,
+  },
   address: {
     street: "1234 5th Ave",
     lng: 123.123,
@@ -23,14 +34,23 @@ const parking1 = {
   price: { hourly: 5, daily: 50, monthly: 500, yearly: 5000 },
   is_available: true,
   images: ["image1.jpg", "image2.jpg"],
-  created_at: "2021-05-05 12:00:00",
-  length: 5,
-  width: 3,
+  listed_on: "2021-05-05 12:00:00",
 };
 
 const parking2 = {
   parking_id: 2,
   owner_id: "2",
+  filters: {
+    security_cameras: true,
+    "24/7 access": true,
+    ev_charging: true,
+    handicap_accessible: true,
+    storage_type: "outdoor",
+    vehicle_type: "sedan / suv",
+    length: 4,
+    width: 4,
+    spaces: 1,
+  },
   address: {
     street: "1234 5th Ave",
     lng: 123.123,
@@ -44,9 +64,7 @@ const parking2 = {
   price: { hourly: 5, daily: 50, monthly: 1500, yearly: 5000 },
   is_available: true,
   images: ["image3.jpg", "image4.jpg"],
-  created_at: "2021-05-05 12:00:00",
-  length: 4,
-  width: 4,
+  listed_on: "2021-05-05 12:00:00",
 };
 
 const expectedPartialParking1: PartialParkingObject = {
@@ -96,6 +114,40 @@ const expectedPartialParkings: PartialParkingObject[] = [
   expectedPartialParking2,
 ];
 
+const expectedEmptyParking = {
+  owner_id: "",
+  filters: {
+    security_cameras: false,
+    "24/7 access": false,
+    ev_charging: false,
+    handicap_accessible: false,
+    storage_type: "",
+    vehicle_type: "",
+    length: 0,
+    width: 0,
+    spaces: 0,
+  },
+  address: {
+    lat: "",
+    lng: "",
+    street: "",
+    city: "",
+    state: "",
+    zip: "",
+    country: "",
+  },
+  description: "",
+  price: {
+    daily: 0,
+    monthly: 0,
+  },
+  is_available: false,
+  images: [],
+  listed_on: "",
+  is_scraped: false,
+  contact: "",
+};
+
 describe("getPartialParkingObject", () => {
   it("should return a partial parking objects", () => {
     const result: PartialParkingObject = getPartialParkingObject(parking1);
@@ -114,29 +166,6 @@ describe("getPartialParkings", () => {
 
 describe("initializeEmptyParking", () => {
   it("should return an empty parking object", () => {
-    const expectedEmptyParking = {
-      owner_id: "",
-      address: {
-        lat: "",
-        lng: "",
-        street: "",
-        city: "",
-        state: "",
-        zip: "",
-        country: "",
-      },
-      description: "",
-      price: {
-        daily: 0,
-        monthly: 0,
-      },
-      is_available: false,
-      images: [],
-      created_at: "",
-      length: 0,
-      width: 0,
-    };
-
     const result = initializeEmptyParking();
 
     expect(result).toEqual(expectedEmptyParking);

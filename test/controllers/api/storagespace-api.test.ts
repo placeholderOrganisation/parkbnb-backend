@@ -80,7 +80,7 @@ const storageSpace1 = {
   price: { hourly: 5, daily: 50, monthly: 500, yearly: 5000 },
   is_available: true,
   images: ["image1.jpg", "image2.jpg"],
-  created_at: "2021-05-05 12:00:00",
+  listed_on: "2021-05-05 12:00:00",
   length: 5,
   width: 3,
 };
@@ -101,7 +101,7 @@ const storageSpace2 = {
   price: { hourly: 5, daily: 50, monthly: 1500, yearly: 5000 },
   is_available: true,
   images: ["image3.jpg", "image4.jpg"],
-  created_at: "2021-05-05 12:00:00",
+  listed_on: "2021-05-05 12:00:00",
   length: 4,
   width: 4,
 };

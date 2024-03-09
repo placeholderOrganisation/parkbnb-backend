@@ -40,7 +40,7 @@ export interface RequestStorageSpaceObject {
   };
   is_available?: boolean;
   images?: string[];
-  created_at?: string;
+  listed_on?: string;
   length?: number;
   width?: number;
 }
@@ -105,7 +105,7 @@ export const initializeEmptyStorageSpace = (): StorageSpaceObject => {
     },
     is_available: false,
     images: [],
-    created_at: "",
+    listed_on: "",
     length: 0,
     width: 0,
   };
