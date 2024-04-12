@@ -390,7 +390,7 @@ describe("Parking API", () => {
       expect(Parking.validate).toHaveBeenCalledTimes(1);
       expect(Parking.validate).toHaveBeenCalledWith(requestBody);
       expect(response.status).toBe(500);
-      expect(response.body).toEqual({ message: "Failed to create parking" });
+      expect(response.body).toEqual({ message: "Failed to create parking", error: {} });
     });
 
     it("should return 500 if creating the parking fails", async () => {
@@ -410,7 +410,7 @@ describe("Parking API", () => {
       expect(Parking.create).toHaveBeenCalledTimes(1);
       expect(Parking.create).toHaveBeenCalledWith(requestBody);
       expect(response.status).toBe(500);
-      expect(response.body).toEqual({ message: "Failed to create parking" });
+      expect(response.body).toEqual({ message: "Failed to create parking", error: {} });
     });
 
     it("should return 201 and create a new parking", async () => {
