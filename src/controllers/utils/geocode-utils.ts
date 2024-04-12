@@ -1,5 +1,5 @@
 // going to call internal mapbox api using mapbox-client.ts
-import { GeocodeClient, getClients } from "../../clients/mapbox-client";
+import { GeocodeClient, getClients } from "../../clients/geocode-client";
 
 interface GeocodeClientResponse {
   clientName: string;
@@ -12,10 +12,12 @@ interface GeocodeClientResponse {
 export interface GeocodeUtilFunctionResponse {
   lat: number;
   lng: number;
+  success: boolean;
 }
 
 const clients: GeocodeClient[] = getClients();
 
+// TODO: Add tests for this function
 export const geocode = (input: string): GeocodeUtilFunctionResponse => {
   const geocodeClientResponsePromises: Promise<
     GeocodeClientResponse
@@ -41,7 +43,7 @@ export const geocode = (input: string): GeocodeUtilFunctionResponse => {
   });
 
   // This block is responsible for sending the actual results from this function
-  // Atleast one of the provider sshould send a success response
+  // Atleast one of the provider should send a success response
   // @ts-ignore
   return Promise.all(geocodeClientResponsePromises).then((responses) => {
     const successResponse = responses.find(
@@ -51,8 +53,9 @@ export const geocode = (input: string): GeocodeUtilFunctionResponse => {
       return {
         lat: successResponse.lat,
         lng: successResponse.lng,
+        success: true,
       };
     }
-    return { lat: -1, lng: -1 };
+    return { lat: -1, lng: -1, success: false };
   });
 };

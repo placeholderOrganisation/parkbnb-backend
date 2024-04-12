@@ -19,7 +19,7 @@ import { storageSpaceController } from "./controllers/api/storagespace-api";
 
 // @ts-ignore
 import { s3Controller } from "./controllers/api/s3-api";
-import { mapBoxController } from "./controllers/api/mapbox-api";
+import { geocodingController } from "./controllers/api/geocode-api";
 
 // Create Express server
 const app = express();
@@ -52,7 +52,7 @@ app.use("/v1/user", userController);
 app.use("/v1/parking", parkingController);
 app.use("/v1/storagespace", storageSpaceController);
 app.use("/v1/s3", s3Controller);
-app.use("/v1/mapbox", mapBoxController);
+app.use("/v1/geocode", geocodingController);
 
 // Route used to test app
 app.get("/test-route", (req, res) => {
