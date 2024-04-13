@@ -41,6 +41,15 @@ describe("Geocode-api", () => {
       jest.clearAllMocks();
     });
 
+    it("should return 400 when address is not provided", async () => {
+      // Make the request
+      const response = await request(app).post("/v1/geocode").send({});
+
+      // Assert the response
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({ error: "Address is required" });
+    });
+
     it("should return 200 and return GeocodeUtilFunctionResponse response object", async () => {
       const expectedResponse = mockGeoCodeSuccessResponse;
 

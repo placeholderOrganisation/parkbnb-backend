@@ -8,6 +8,9 @@ export const geocodingController = Router();
 geocodingController.post("", async (req: Request, res: Response) => {
   try {
     const address = req.body.address;
+    if (!address) {
+      return res.status(400).json({ error: "Address is required" });
+    }
     const result: GeocodeUtilFunctionResponse = await geocode(address);
 
     if (result.success === false) {
