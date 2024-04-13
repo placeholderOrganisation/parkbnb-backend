@@ -30,6 +30,7 @@ const testUser = {
   email: "",
   images: ["image1.jpg"],
   verified: false,
+  contactNumber: "",
 };
 
 const emptyTestUser = {
@@ -39,6 +40,7 @@ const emptyTestUser = {
   email: "",
   images: [],
   verified: false,
+  contactNumber: "",
 };
 
 const testUser2 = {

@@ -102,6 +102,7 @@ export const initializeEmptyUser = (): UserObject => {
     email: "",
     images: [],
     verified: false,
+    contactNumber: "",
   };
 
   return newUserObject;
