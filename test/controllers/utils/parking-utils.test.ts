@@ -7,6 +7,11 @@ import {
 } from "../../../src/controllers/utils/parking-utils";
 import { ParkingObject } from "../../../src/models/parking-model";
 
+import dayjs from "dayjs";
+import * as dayjsPluginUTC from "dayjs/plugin/utc";
+
+dayjs.extend(dayjsPluginUTC.default);
+
 const parking1 = {
   parking_id: 1,
   owner_id: "1",
@@ -143,7 +148,7 @@ const expectedEmptyParking = {
   },
   is_available: false,
   images: [],
-  listed_on: "",
+  listed_on: dayjs.utc(),
   is_scraped: false,
   contact: "",
 };
@@ -166,8 +171,15 @@ describe("getPartialParkings", () => {
 
 describe("initializeEmptyParking", () => {
   it("should return an empty parking object", () => {
+
+    jest.useFakeTimers().setSystemTime(new Date())
+
+    expectedEmptyParking.listed_on = dayjs.utc();
+
     const result = initializeEmptyParking();
 
     expect(result).toEqual(expectedEmptyParking);
+
+    jest.useRealTimers()
   });
 });

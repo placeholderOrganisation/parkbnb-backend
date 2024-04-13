@@ -1,4 +1,8 @@
+import dayjs from "dayjs";
+import * as dayjsPluginUTC from "dayjs/plugin/utc";
 import { ParkingObject } from "../../models/parking-model";
+
+dayjs.extend(dayjsPluginUTC.default);
 
 export interface PartialParkingObject {
   owner_id: string;
@@ -109,7 +113,7 @@ export const initializeEmptyParking = (): ParkingObject => {
     },
     is_available: false,
     images: [],
-    listed_on: "",
+    listed_on: dayjs.utc(),
     is_scraped: false,
     contact: "",
   };

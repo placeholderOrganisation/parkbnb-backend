@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import { User } from "./user-model";
+import { Dayjs } from "dayjs";
 
 export interface ParkingObject {
   owner_id?: string;
@@ -32,7 +33,7 @@ export interface ParkingObject {
   };
   is_available: boolean;
   images: string[];
-  listed_on: string;
+  listed_on: Dayjs;
   is_scraped?: boolean;
   contact?: string;
 }
@@ -68,7 +69,7 @@ const parkingSchema: Schema = new Schema<ParkingObject>({
   },
   is_available: { type: Boolean, required: true },
   images: { type: [String], required: true },
-  listed_on: { type: String, required: true },
+  listed_on: { type: String, required: false },
   is_scraped: { type: Boolean, required: false },
   contact: { type: String, required: false },
 });
