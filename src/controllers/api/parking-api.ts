@@ -74,9 +74,7 @@ parkingController.post("/", async (req: Request, res: Response) => {
     const newParking = await Parking.create(parkingObj);
     res.status(201).json(newParking);
   } catch (error) {
-    if (parkingData.is_scraped) {
-      console.log("error", error);
-    }
+    console.log("error", error);
     res.status(500).json({ message: "Failed to create parking", error });
   }
 });

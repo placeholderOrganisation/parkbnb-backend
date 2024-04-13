@@ -97,7 +97,7 @@ parkingSchema.pre<ParkingObject>("save", async function (next) {
       }
       throw new Error("Contact should exist for scraped listing");
     } else {
-      const user = await User.findOne({ _id: owner_id });
+      const user = await User.findOne({ id: owner_id });
       isExisting = await Parking.findOne({
         "address.lat": lat,
         "address.lng": lng,
