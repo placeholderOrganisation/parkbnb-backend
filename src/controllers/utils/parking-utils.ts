@@ -83,6 +83,48 @@ export const getPartialParkingObject = (
   };
 };
 
+export const assembleNewParkingBody = (parkingData: any): ParkingObject => {
+  const emptyParkingObject: ParkingObject = initializeEmptyParking();
+
+  if (parkingData.owner_id) {
+    emptyParkingObject.owner_id = parkingData.owner_id;
+  }
+
+  if (parkingData.filters) {
+    emptyParkingObject.filters = parkingData.filters;
+  }
+
+  if (parkingData.address) {
+    emptyParkingObject.address = parkingData.address;
+  }
+
+  if (parkingData.description) {
+    emptyParkingObject.description = parkingData.description;
+  }
+
+  if (parkingData.price) {
+    emptyParkingObject.price = parkingData.price;
+  }
+
+  if (parkingData.is_available) {
+    emptyParkingObject.is_available = parkingData.is_available;
+  }
+
+  if (parkingData.images) {
+    emptyParkingObject.images = parkingData.images;
+  }
+
+  if (parkingData.is_scraped) {
+    emptyParkingObject.is_scraped = parkingData.is_scraped;
+  }
+
+  if (parkingData.contact) {
+    emptyParkingObject.contact = parkingData.contact;
+  }
+
+  return emptyParkingObject;
+};
+
 export const initializeEmptyParking = (): ParkingObject => {
   const newParkingObject: ParkingObject = {
     owner_id: "",

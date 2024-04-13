@@ -1,8 +1,12 @@
 // @ts-nocheck
-// @ts-nocheck
 import request from "supertest";
 import app from "../../../src/app";
 import { Parking } from "../../../src/models/parking-model";
+
+import dayjs from "dayjs";
+import * as dayjsPluginUTC from "dayjs/plugin/utc";
+
+dayjs.extend(dayjsPluginUTC.default);
 
 jest.mock("../../../src/clients/db-client", () => {
   return {
@@ -174,6 +178,43 @@ const expectedPartialParkings: PartialParkingObject[] = [
 ];
 
 describe("Parking API", () => {
+  jest.useFakeTimers().setSystemTime(new Date());
+
+  // Mock the empty parking object
+  const emptyParkingObject = {
+    owner_id: "",
+    filters: {
+      security_cameras: false,
+      "24/7 access": false,
+      ev_charging: false,
+      handicap_accessible: false,
+      storage_type: "",
+      vehicle_type: "",
+      length: 0,
+      width: 0,
+      spaces: 0,
+    },
+    address: {
+      lat: "",
+      lng: "",
+      street: "",
+      city: "",
+      state: "",
+      zip: "",
+      country: "",
+    },
+    description: "",
+    price: {
+      daily: 0,
+      monthly: 0,
+    },
+    is_available: false,
+    images: [],
+    listed_on: dayjs.utc(),
+    is_scraped: false,
+    contact: "",
+  };
+
   describe("GET /", () => {
     beforeEach(() => {
       jest.clearAllMocks();
@@ -388,9 +429,12 @@ describe("Parking API", () => {
 
       // Assert the response
       expect(Parking.validate).toHaveBeenCalledTimes(1);
-      expect(Parking.validate).toHaveBeenCalledWith(requestBody);
+      expect(Parking.validate).toHaveBeenCalledWith(emptyParkingObject);
       expect(response.status).toBe(500);
-      expect(response.body).toEqual({ message: "Failed to create parking", error: {} });
+      expect(response.body).toEqual({
+        message: "Failed to create parking",
+        error: {},
+      });
     });
 
     it("should return 500 if creating the parking fails", async () => {
@@ -406,11 +450,14 @@ describe("Parking API", () => {
 
       // Assert the response
       expect(Parking.validate).toHaveBeenCalledTimes(1);
-      expect(Parking.validate).toHaveBeenCalledWith(requestBody);
+      expect(Parking.validate).toHaveBeenCalledWith(emptyParkingObject);
       expect(Parking.create).toHaveBeenCalledTimes(1);
-      expect(Parking.create).toHaveBeenCalledWith(requestBody);
+      expect(Parking.create).toHaveBeenCalledWith(emptyParkingObject);
       expect(response.status).toBe(500);
-      expect(response.body).toEqual({ message: "Failed to create parking", error: {} });
+      expect(response.body).toEqual({
+        message: "Failed to create parking",
+        error: {},
+      });
     });
 
     it("should return 201 and create a new parking", async () => {
@@ -428,7 +475,7 @@ describe("Parking API", () => {
       expect(response.status).toBe(201);
       expect(Parking.validate).toHaveBeenCalledTimes(1);
       expect(Parking.create).toHaveBeenCalledTimes(1);
-      expect(Parking.create).toHaveBeenCalledWith(requestBody);
+      expect(Parking.create).toHaveBeenCalledWith(emptyParkingObject);
       // Add more assertions as needed
     });
   });

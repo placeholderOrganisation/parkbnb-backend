@@ -3,6 +3,7 @@ import { Parking, ParkingObject } from "../../models/parking-model";
 import {
   PartialParkingObject,
   RequestParkingObject,
+  assembleNewParkingBody,
   getPartialParkings,
 } from "../utils/parking-utils";
 
@@ -68,12 +69,13 @@ parkingController.post("/", async (req: Request, res: Response) => {
     if (!parkingData || Object.keys(parkingData).length === 0) {
       return res.status(400).json({ message: "Parking data is required" });
     }
-    await Parking.validate(parkingData);
-    const newParking = await Parking.create(parkingData);
+    const parkingObj: ParkingObject = assembleNewParkingBody(parkingData);
+    await Parking.validate(parkingObj);
+    const newParking = await Parking.create(parkingObj);
     res.status(201).json(newParking);
   } catch (error) {
     if (parkingData.is_scraped) {
-      console.log('error', error)
+      console.log("error", error);
     }
     res.status(500).json({ message: "Failed to create parking", error });
   }
