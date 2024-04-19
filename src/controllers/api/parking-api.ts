@@ -19,6 +19,7 @@ parkingController.get("/", async (req: Request, res: Response) => {
       parkings
     );
 
+    // return neccessary data
     res.status(200).json(partialParkings);
   } catch (error) {
     res.status(500).json({ message: "Failed to get parkings" });
