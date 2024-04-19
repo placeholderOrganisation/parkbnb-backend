@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import { User } from "./user-model";
+import { Dayjs } from "dayjs";
 
 export interface StorageSpaceObject {
   owner_id: string;
@@ -23,7 +24,7 @@ export interface StorageSpaceObject {
   images: string[];
   length: number;
   width: number;
-  listed_on: string;
+  listed_on: Dayjs;
 }
 
 const storageSpaceSchema: Schema = new Schema<StorageSpaceObject>({

@@ -7,6 +7,11 @@ import {
 } from "../../../src/controllers/utils/storagespace-utils";
 import { StorageSpaceObject } from "../../../src/models/storagespace-model";
 
+import dayjs from "dayjs";
+import * as dayjsPluginUTC from "dayjs/plugin/utc";
+
+dayjs.extend(dayjsPluginUTC.default);
+
 const storageSpace1 = {
   storagespace_id: 1,
   owner_id: "1",
@@ -134,7 +139,7 @@ describe("initializeEmptyStorageSpace", () => {
       },
       is_available: false,
       images: [],
-      listed_on: "",
+      listed_on: dayjs.utc(),
       length: 0,
       width: 0,
     };

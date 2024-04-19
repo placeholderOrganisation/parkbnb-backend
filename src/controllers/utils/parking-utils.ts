@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import * as dayjsPluginUTC from "dayjs/plugin/utc";
 import { ParkingObject } from "../../models/parking-model";
 
@@ -44,7 +44,7 @@ export interface RequestParkingObject {
   };
   is_available?: boolean;
   images?: string[];
-  listed_on?: string;
+  listed_on?: Dayjs;
   length?: number;
   width?: number;
 }

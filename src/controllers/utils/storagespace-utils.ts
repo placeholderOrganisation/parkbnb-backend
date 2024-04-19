@@ -1,4 +1,9 @@
 import { StorageSpaceObject } from "../../models/storagespace-model";
+import dayjs, { Dayjs } from "dayjs";
+import * as dayjsPluginUTC from "dayjs/plugin/utc";
+import { ParkingObject } from "../../models/parking-model";
+
+dayjs.extend(dayjsPluginUTC.default);
 
 export interface PartialStorageSpaceObject {
   owner_id: string;
@@ -40,7 +45,7 @@ export interface RequestStorageSpaceObject {
   };
   is_available?: boolean;
   images?: string[];
-  listed_on?: string;
+  listed_on?: Dayjs;
   length?: number;
   width?: number;
 }
@@ -105,7 +110,7 @@ export const initializeEmptyStorageSpace = (): StorageSpaceObject => {
     },
     is_available: false,
     images: [],
-    listed_on: "",
+    listed_on: dayjs.utc(),
     length: 0,
     width: 0,
   };
