@@ -130,7 +130,7 @@ export const initializeEmptyParking = (): ParkingObject => {
     owner_id: "",
     filters: {
       security_cameras: false,
-      "24/7 access": false,
+      ALL_DAY_ACCESS: false,
       ev_charging: false,
       handicap_accessible: false,
       storage_type: "",

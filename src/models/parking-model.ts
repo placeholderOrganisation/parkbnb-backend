@@ -6,7 +6,7 @@ export interface ParkingObject {
   owner_id?: string;
   filters: {
     security_cameras: boolean;
-    "24/7 access": boolean;
+    ALL_DAY_ACCESS: boolean;
     ev_charging: boolean;
     handicap_accessible: boolean;
     storage_type: string;
@@ -42,7 +42,7 @@ const parkingSchema: Schema = new Schema<ParkingObject>({
   owner_id: { type: String, required: false },
   filters: {
     security_cameras: { type: Boolean, required: true },
-    "24/7 access": { type: Boolean, required: true },
+    ALL_DAY_ACCESS: { type: Boolean, required: true },
     ev_charging: { type: Boolean, required: true },
     handicap_accessible: { type: Boolean, required: true },
     storage_type: { type: String, required: true },

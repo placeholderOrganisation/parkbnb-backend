@@ -17,7 +17,7 @@ const parking1 = {
   owner_id: "1",
   filters: {
     security_cameras: true,
-    "24/7 access": true,
+    ALL_DAY_ACCESS: true,
     ev_charging: true,
     handicap_accessible: true,
     storage_type: "outdoor",
@@ -47,7 +47,7 @@ const parking2 = {
   owner_id: "2",
   filters: {
     security_cameras: true,
-    "24/7 access": true,
+    ALL_DAY_ACCESS: true,
     ev_charging: true,
     handicap_accessible: true,
     storage_type: "outdoor",
@@ -123,7 +123,7 @@ const expectedEmptyParking = {
   owner_id: "",
   filters: {
     security_cameras: false,
-    "24/7 access": false,
+    ALL_DAY_ACCESS: false,
     ev_charging: false,
     handicap_accessible: false,
     storage_type: "",
