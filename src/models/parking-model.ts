@@ -3,6 +3,7 @@ import { User } from "./user-model";
 import { Dayjs } from "dayjs";
 
 export interface ParkingObject {
+  _id?: string;
   owner_id?: string;
   filters: {
     security_cameras: boolean;
@@ -35,7 +36,7 @@ export interface ParkingObject {
   images: string[];
   listed_on: Dayjs;
   is_scraped?: boolean;
-  contact?: string;
+  contact: string;
 }
 
 const parkingSchema: Schema = new Schema<ParkingObject>({
@@ -71,7 +72,7 @@ const parkingSchema: Schema = new Schema<ParkingObject>({
   images: { type: [String], required: true },
   listed_on: { type: String, required: false },
   is_scraped: { type: Boolean, required: false },
-  contact: { type: String, required: false },
+  contact: { type: String, required: true },
 });
 
 parkingSchema.pre<ParkingObject>("save", async function (next) {

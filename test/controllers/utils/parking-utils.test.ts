@@ -74,6 +74,17 @@ const parking2 = {
 
 const expectedPartialParking1: PartialParkingObject = {
   owner_id: "1",
+  filters: {
+    security_cameras: true,
+    full_day_access: true,
+    ev_charging: true,
+    handicap_accessible: true,
+    storage_type: "outdoor",
+    vehicle_type: "sedan / suv",
+    length: 5,
+    width: 3,
+    spaces: 1,
+  },
   address: {
     street: "1234 5th Ave",
     lng: 123.123,
@@ -83,17 +94,27 @@ const expectedPartialParking1: PartialParkingObject = {
     zip: 10001,
     country: "USA",
   },
-  price: {
-    monthly: 500,
-  },
+  description: "parking spot in the back",
+  price: { daily: 50, monthly: 500 },
   is_available: true,
   images: ["image1.jpg", "image2.jpg"],
-  length: 5,
-  width: 3,
+  listed_on: "2021-05-05 12:00:00",
+  is_scraped: false,
 };
 
 const expectedPartialParking2: PartialParkingObject = {
   owner_id: "2",
+  filters: {
+    security_cameras: true,
+    full_day_access: true,
+    ev_charging: true,
+    handicap_accessible: true,
+    storage_type: "outdoor",
+    vehicle_type: "sedan / suv",
+    length: 4,
+    width: 4,
+    spaces: 1,
+  },
   address: {
     street: "1234 5th Ave",
     lng: 123.123,
@@ -103,13 +124,12 @@ const expectedPartialParking2: PartialParkingObject = {
     zip: 10001,
     country: "USA",
   },
-  price: {
-    monthly: 1500,
-  },
+  description: "parking spot in the back",
+  price: { daily: 50, monthly: 1500 },
   is_available: true,
   images: ["image3.jpg", "image4.jpg"],
-  length: 4,
-  width: 4,
+  listed_on: "2021-05-05 12:00:00",
+  is_scraped: false,
 };
 
 const parkings: ParkingObject[] = [parking1, parking2];

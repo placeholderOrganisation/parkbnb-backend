@@ -5,7 +5,19 @@ import { ParkingObject } from "../../models/parking-model";
 dayjs.extend(dayjsPluginUTC.default);
 
 export interface PartialParkingObject {
-  owner_id: string;
+  _id: string;
+  owner_id: string | null;
+  filters: {
+    security_cameras: boolean;
+    full_day_access: boolean;
+    ev_charging: boolean;
+    handicap_accessible: boolean;
+    storage_type: string;
+    vehicle_type: string;
+    length: number;
+    width: number;
+    spaces: number;
+  };
   address: {
     lat: string;
     lng: string;
@@ -15,13 +27,16 @@ export interface PartialParkingObject {
     zip: string;
     country: string;
   };
+  description: string;
   price: {
+    daily: number;
     monthly: number;
   };
   is_available: boolean;
   images: string[];
-  length: number;
-  width: number;
+  listed_on: Dayjs;
+  is_scraped: boolean;
+  contact: string | null;
 }
 
 export interface RequestParkingObject {
@@ -60,26 +75,36 @@ export const getPartialParkings = (
 export const getPartialParkingObject = (
   parking: ParkingObject
 ): PartialParkingObject => {
-  const { owner_id, address, price, is_available, images, filters } = parking;
-  const { length, width } = filters;
+  const {
+    _id,
+    address,
+    price,
+    is_available,
+    images,
+    filters,
+    description,
+    listed_on,
+    contact,
+  } = parking;
+
+  const is_scraped = parking.is_scraped || false;
+  const owner_id = parking.owner_id || null;
+
   return {
+    _id,
     owner_id,
-    address: {
-      lat: address.lat,
-      lng: address.lng,
-      street: address.street,
-      city: address.city,
-      state: address.state,
-      zip: address.zip,
-      country: address.country,
-    },
+    filters,
+    address,
+    description,
     price: {
+      daily: price.daily,
       monthly: price.monthly,
     },
     is_available,
     images,
-    length,
-    width,
+    listed_on,
+    is_scraped,
+    contact,
   };
 };
 

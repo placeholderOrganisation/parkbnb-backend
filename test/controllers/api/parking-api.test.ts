@@ -1,7 +1,7 @@
 // @ts-nocheck
 import request from "supertest";
 import app from "../../../src/app";
-import { Parking } from "../../../src/models/parking-model";
+import { Parking, ParkingObject } from "../../../src/models/parking-model";
 
 import dayjs from "dayjs";
 import * as dayjsPluginUTC from "dayjs/plugin/utc";
@@ -69,7 +69,7 @@ jest.mock("../../../src/models/parking-model", () => ({
 }));
 
 const parking1: ParkingObject = {
-  parking_id: 1,
+  _id: 1,
   owner_id: "1",
   filters: {
     security_cameras: true,
@@ -99,7 +99,7 @@ const parking1: ParkingObject = {
 };
 
 const parking2: ParkingObject = {
-  parking_id: 2,
+  _id: 2,
   owner_id: "2",
   filters: {
     security_cameras: true,
@@ -131,7 +131,19 @@ const parking2: ParkingObject = {
 };
 
 const expectedPartialParking1: PartialParkingObject = {
+  _id: 1,
   owner_id: "1",
+  filters: {
+    security_cameras: true,
+    full_day_access: true,
+    ev_charging: true,
+    handicap_accessible: true,
+    storage_type: "outdoor",
+    vehicle_type: "sedan / suv",
+    length: 5,
+    width: 3,
+    spaces: 1,
+  },
   address: {
     street: "1234 5th Ave",
     lng: 123.123,
@@ -141,17 +153,28 @@ const expectedPartialParking1: PartialParkingObject = {
     zip: 10001,
     country: "USA",
   },
-  price: {
-    monthly: 500,
-  },
+  description: "parking spot in the back",
+  price: { daily: 50, monthly: 500 },
   is_available: true,
   images: ["image1.jpg", "image2.jpg"],
-  length: 5,
-  width: 3,
+  listed_on: "2021-05-05 12:00:00",
+  is_scraped: false,
 };
 
 const expectedPartialParking2: PartialParkingObject = {
+  _id: 2,
   owner_id: "2",
+  filters: {
+    security_cameras: true,
+    full_day_access: true,
+    ev_charging: true,
+    handicap_accessible: true,
+    storage_type: "outdoor",
+    vehicle_type: "sedan / suv",
+    length: 4,
+    width: 4,
+    spaces: 1,
+  },
   address: {
     street: "1234 5th Ave",
     lng: 123.123,
@@ -161,13 +184,12 @@ const expectedPartialParking2: PartialParkingObject = {
     zip: 10001,
     country: "USA",
   },
-  price: {
-    monthly: 1500,
-  },
+  description: "parking spot in the back",
+  price: { daily: 50, monthly: 1500 },
   is_available: true,
   images: ["image3.jpg", "image4.jpg"],
-  length: 4,
-  width: 4,
+  listed_on: "2021-05-05 12:00:00",
+  is_scraped: false,
 };
 
 const parkings = [parking1, parking2];
@@ -180,7 +202,7 @@ const expectedPartialParkings: PartialParkingObject[] = [
 describe("Parking API", () => {
   jest.useFakeTimers().setSystemTime(new Date());
 
-  // Mock the empty parking object
+  // Mock the empty parking object here to get correct timestamps
   const emptyParkingObject = {
     owner_id: "",
     filters: {
