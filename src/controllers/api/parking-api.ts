@@ -31,7 +31,7 @@ parkingController.get("/:id", async (req: Request, res: Response) => {
   try {
     const parkingId = req.params.id;
     const parking: ParkingObject | null = await Parking.findOne({
-      id: parkingId,
+      _id: parkingId,
     });
     if (!parking) {
       return res.status(404).json({ message: "Parking not found" });
