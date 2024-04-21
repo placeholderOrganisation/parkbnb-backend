@@ -30,7 +30,7 @@ jest.mock("../../../src/models/parking-model", () => ({
         return null;
       })
       .mockImplementationOnce(() => {
-        return parking1;
+        return expectedPartialParking1;
       })
       .mockImplementationOnce(() => {
         throw new Error();
@@ -284,7 +284,7 @@ describe("Parking API", () => {
 
       // Assert the response
       expect(response.status).toBe(200);
-      expect(response.body).toEqual(parkings[0]);
+      expect(response.body).toEqual(expectedPartialParkings[0]);
 
       // Add more assertions as needed
     });

@@ -30,7 +30,7 @@ parkingController.get("/", async (req: Request, res: Response) => {
 parkingController.get("/:id", async (req: Request, res: Response) => {
   try {
     const parkingId = req.params.id;
-    const parking: ParkingObject | null = await Parking.findOne({
+    const parking: PartialParkingObject | null = await Parking.findOne({
       _id: parkingId,
     });
     if (!parking) {
