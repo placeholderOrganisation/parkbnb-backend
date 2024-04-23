@@ -25,6 +25,7 @@ authController.get("/login/failure", (req: Request, res: Response) => {
   });
 });
 
+// currently not in use
 authController.get("/logout", (req: Request, res: Response) => {
   req.logout(req.user, (err) => {
     res.redirect("/");
