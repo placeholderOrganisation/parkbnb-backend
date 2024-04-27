@@ -55,6 +55,11 @@ app.use("/v1/s3", s3Controller);
 app.use("/v1/geocode", geocodingController);
 
 // Route used to test app
+app.get("/", (req, res) => {
+  res.status(200).send("Hello, World from backend!");
+});
+
+// Route used to test app
 app.get("/test-route", (req, res) => {
   res.status(200).send("Hello, World!");
 });
