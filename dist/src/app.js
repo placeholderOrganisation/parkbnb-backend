@@ -47,7 +47,7 @@ const geocode_api_1 = require("./controllers/api/geocode-api");
 // Create Express server
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
-    origin: [process.env.CLIENT_URL, "https://checkout.stripe.com"],
+    origin: [process.env.CLIENT_URL, "https://checkout.stripe.com", "http://209.38.8.8/"],
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
 }));
@@ -68,6 +68,10 @@ app.use("/v1/parking", parking_api_1.parkingController);
 app.use("/v1/storagespace", storagespace_api_1.storageSpaceController);
 app.use("/v1/s3", s3_api_1.s3Controller);
 app.use("/v1/geocode", geocode_api_1.geocodingController);
+// Route used to test app
+app.get("/", (req, res) => {
+    res.status(200).send("Hello, World from backend!");
+});
 // Route used to test app
 app.get("/test-route", (req, res) => {
     res.status(200).send("Hello, World!");

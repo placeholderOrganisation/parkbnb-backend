@@ -26,7 +26,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: [process.env.CLIENT_URL, "https://checkout.stripe.com"],
+    origin: [process.env.CLIENT_URL, "https://checkout.stripe.com", "http://209.38.8.8/"],
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
