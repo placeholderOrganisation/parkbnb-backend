@@ -1,7 +1,6 @@
 import { StorageSpaceObject } from "../../models/storagespace-model";
 import dayjs, { Dayjs } from "dayjs";
 import * as dayjsPluginUTC from "dayjs/plugin/utc";
-import { ParkingObject } from "../../models/parking-model";
 
 dayjs.extend(dayjsPluginUTC.default);
 
