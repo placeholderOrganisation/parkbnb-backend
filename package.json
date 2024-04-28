@@ -5,8 +5,8 @@
   "main": "server.ts",
   "scripts": {
     "build": "tsc",
+    "prod": "ts-node -r ./src/env/env-loader.prod.ts ./src/server.ts",
     "start": "nodemon",
-    "dev": "nodemon",
     "test": "jest --watchAll"
   },
   "author": "",
