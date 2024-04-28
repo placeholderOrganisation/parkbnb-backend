@@ -5,7 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "build": "tsc",
-    "prod": "ts-node -r ./src/env/env-loader.prod.ts ./src/server.ts",
+    "prod": "node -r ./src/env/env-loader.prod.ts ./dist/src/server.js",
     "start": "nodemon",
     "test": "jest --watchAll"
   },
