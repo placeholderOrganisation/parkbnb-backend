@@ -65,6 +65,17 @@ jest.mock("../../../src/models/parking-model", () => ({
       .mockImplementationOnce(() => {
         return;
       }),
+    findOneAndDelete: jest
+      .fn()
+      .mockImplementationOnce(() => {
+        return null;
+      })
+      .mockImplementationOnce(() => {
+        return parkingUsedForDelete;
+      })
+      .mockImplementationOnce(() => {
+        throw new Error();
+      }),
   },
 }));
 
@@ -128,6 +139,36 @@ const parking2: ParkingObject = {
   listed_on: "2021-05-05 12:00:00",
   length: 4,
   width: 4,
+};
+
+const parkingUsedForDelete: ParkingObject = {
+  _id: 3,
+  owner_id: "3",
+  filters: {
+    security_cameras: true,
+    full_day_access: true,
+    ev_charging: true,
+    handicap_accessible: true,
+    storage_type: "outdoor",
+    vehicle_type: "sedan / suv",
+    length: 5,
+    width: 3,
+    spaces: 1,
+  },
+  address: {
+    street: "1234 5th Ave",
+    lng: 123.123,
+    lat: 123.123,
+    city: "New York",
+    state: "NY",
+    zip: 10001,
+    country: "USA",
+  },
+  description: "parking spot in the back",
+  price: { hourly: 5, daily: 50, monthly: 500, yearly: 5000 },
+  is_available: true,
+  images: ["image1.jpg", "image2.jpg"],
+  listed_on: "2021-05-05 12:00:00",
 };
 
 const expectedPartialParking1: PartialParkingObject = {
@@ -296,6 +337,68 @@ describe("Parking API", () => {
       // Assert the response
       expect(response.status).toBe(500);
       expect(response.body).toEqual({ message: "Failed to get parking" });
+      // Add more assertions as needed
+    });
+  });
+
+  describe("DELETE /:id", () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    const requestBody = {
+      parking_id: "3",
+      owner_id: "3",
+    };
+
+    it("should return 400 if body is null", async () => {
+      // Mock request body
+      const requestBody = null;
+
+      // Make the request
+      const response = await request(app)
+        .delete("/v1/parking/")
+        .send(requestBody);
+
+      // Assert the response
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({ message: "Parking Data is required" });
+      // Add more assertions as needed
+    });
+
+    it("should return 404 if parking with given id not found", async () => {
+      // Make the request
+      const response = await request(app)
+        .delete("/v1/parking/")
+        .send(requestBody);
+
+      // Assert the response
+      expect(response.status).toBe(404);
+      expect(response.body).toEqual({ message: "Parking not found" });
+      // Add more assertions as needed
+    });
+
+    it("should return 200 and delete the parking", async () => {
+      // Make the request
+      const response = await request(app)
+        .delete("/v1/parking/")
+        .send(requestBody);
+
+      // Assert the response
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(parkingUsedForDelete._id);
+      // Add more assertions as needed
+    });
+
+    it("should return 500 if an error occurs while deleting the parking", async () => {
+      // Make the request
+      const response = await request(app)
+        .delete("/v1/parking/")
+        .send(requestBody);
+
+      // Assert the response
+      expect(response.status).toBe(500);
+      expect(response.body).toEqual({ message: "Failed to delete parking" });
       // Add more assertions as needed
     });
   });

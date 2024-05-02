@@ -42,12 +42,35 @@ parkingController.get("/:id", async (req: Request, res: Response) => {
   }
 });
 
+parkingController.delete("/", async (req: Request, res: Response) => {
+  try {
+    const parkingId = req.body.parking_id;
+    const ownwerId = req.body.owner_id;
+    if (!parkingId || !ownwerId) {
+      return res.status(400).json({ message: "Parking Data is required" });
+    }
+    const deletedParking: ParkingObject | null = await Parking.findOneAndDelete(
+      { id: parkingId, owner_id: ownwerId }
+    );
+    if (!deletedParking) {
+      return res.status(404).json({ message: "Parking not found" });
+    }
+    res.status(200).json(deletedParking._id);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to delete parking" });
+  }
+});
+
 // Route to update a parking given an ID
 parkingController.put("/:id", async (req: Request, res: Response) => {
   try {
     const parkingId = req.params.id;
     const parkingData: RequestParkingObject = req.body;
-    if (!parkingData || Object.keys(parkingData).length === 0 || parkingData.owner_id) {
+    if (
+      !parkingData ||
+      Object.keys(parkingData).length === 0 ||
+      parkingData.owner_id
+    ) {
       return res.status(400).json({ message: "Parking data is required" });
     }
     const updatedParking: ParkingObject | null = await Parking.findOneAndUpdate(

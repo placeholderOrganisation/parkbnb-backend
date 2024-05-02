@@ -147,6 +147,11 @@ export const assembleNewParkingBody = (parkingData: any): ParkingObject => {
     emptyParkingObject.contact = parkingData.contact;
   }
 
+  if (parkingData.listed_on) {
+    const formattedListedOn = dayjs(parkingData.listed_on);
+    emptyParkingObject.listed_on = formattedListedOn;
+  }
+
   return emptyParkingObject;
 };
 
