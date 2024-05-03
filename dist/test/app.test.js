@@ -14,7 +14,7 @@ jest.mock("../src/clients/db-client", () => {
 });
 describe("GET /test-route", () => {
     it("should return 200 OK", () => {
-        return (0, supertest_1.default)(app_1.default).get("/test-route")
+        return (0, supertest_1.default)(app_1.default).get("/sa/test-route")
             .expect(200);
     });
 });
