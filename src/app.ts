@@ -51,17 +51,17 @@ app.use("/v1/s3", s3Controller);
 app.use("/v1/geocode", geocodingController);
 
 // Route used to test app
-app.get("/", (req, res) => {
+app.get("/sa", (req, res) => {
   res.status(200).send("Hello, World from backend!");
 });
 
 // Route used to test app
-app.get("/test-route", (req, res) => {
+app.get("/sa/test-route", (req, res) => {
   res.status(200).send("Hello, World!");
 });
 
 // Route to return HTML img tag
-app.get("/image", (req, res) => {
+app.get("/sa/image", (req, res) => {
   const imageUrl =
     "https://parkbnb-test.s3.us-east-2.amazonaws.com/engagement%20%281%29.jpg";
   const imgTag = `<img src="${imageUrl}" alt="Image">`;
@@ -69,7 +69,7 @@ app.get("/image", (req, res) => {
 });
 
 // Route to /test that sends a form as HTML to upload a file to /v1/parking/upload
-app.get("/test/s3", (req, res) => {
+app.get("/test/sa/s3", (req, res) => {
   res.send(`
     <form action="/v1/s3/upload-single" method="post" enctype="multipart/form-data">
       <input type="file" name="file" />
@@ -79,7 +79,7 @@ app.get("/test/s3", (req, res) => {
 });
 
 // Route to test auth
-app.get("/test/auth", (req, res) => {
+app.get("/test/sa/auth", (req, res) => {
   res.send(`
     <form action="/v1/auth/local" method="post">
       <input type="text" name="userEmail" />
