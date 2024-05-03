@@ -456,7 +456,7 @@ describe("Parking API", () => {
             expect(response.status).toBe(404);
             expect(response.body).toEqual({ message: "Parking not found" });
             expect(parking_model_1.Parking.findOneAndUpdate).toHaveBeenCalledTimes(1);
-            expect(parking_model_1.Parking.findOneAndUpdate).toHaveBeenCalledWith({ id: "1", owner_id: "123" }, safeParkingDataAttributes, { new: true });
+            expect(parking_model_1.Parking.findOneAndUpdate).toHaveBeenCalledWith({ _id: "1", owner_id: "123" }, safeParkingDataAttributes, { new: true });
             // Add more assertions as needed
         }));
         it("should return 200 and update the parking", () => __awaiter(void 0, void 0, void 0, function* () {
@@ -473,7 +473,7 @@ describe("Parking API", () => {
             // Assert the response
             expect(response.status).toBe(200);
             expect(parking_model_1.Parking.findOneAndUpdate).toHaveBeenCalledTimes(1);
-            expect(parking_model_1.Parking.findOneAndUpdate).toHaveBeenCalledWith({ id: "1", owner_id: "123" }, safeParkingDataAttributes, { new: true });
+            expect(parking_model_1.Parking.findOneAndUpdate).toHaveBeenCalledWith({ _id: "1", owner_id: "123" }, safeParkingDataAttributes, { new: true });
             // Add more assertions as needed
         }));
         it("should return 500 if an error occurs while updating the parking", () => __awaiter(void 0, void 0, void 0, function* () {
@@ -491,7 +491,7 @@ describe("Parking API", () => {
             expect(response.status).toBe(500);
             expect(response.body).toEqual({ message: "Failed to update parking" });
             expect(parking_model_1.Parking.findOneAndUpdate).toHaveBeenCalledTimes(1);
-            expect(parking_model_1.Parking.findOneAndUpdate).toHaveBeenCalledWith({ id: "1", owner_id: "123" }, safeParkingDataAttributes, { new: true });
+            expect(parking_model_1.Parking.findOneAndUpdate).toHaveBeenCalledWith({ _id: "1", owner_id: "123" }, safeParkingDataAttributes, { new: true });
         }));
     });
     describe("POST /", () => {

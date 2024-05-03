@@ -65,7 +65,7 @@ exports.parkingController.delete("/", (req, res) => __awaiter(void 0, void 0, vo
         if (!parkingId || !ownwerId) {
             return res.status(400).json({ message: "Parking Data is required" });
         }
-        const deletedParking = yield parking_model_1.Parking.findOneAndDelete({ id: parkingId, owner_id: ownwerId });
+        const deletedParking = yield parking_model_1.Parking.findOneAndDelete({ _id: parkingId, owner_id: ownwerId });
         if (!deletedParking) {
             return res.status(404).json({ message: "Parking not found" });
         }
@@ -87,7 +87,7 @@ exports.parkingController.put("/:id", (req, res) => __awaiter(void 0, void 0, vo
             !owner_id) {
             return res.status(400).json({ message: "Parking data is required" });
         }
-        const updatedParking = yield parking_model_1.Parking.findOneAndUpdate({ id: parkingId, owner_id: owner_id }, safeParkingDataAttributes, { new: true });
+        const updatedParking = yield parking_model_1.Parking.findOneAndUpdate({ _id: parkingId, owner_id: owner_id }, safeParkingDataAttributes, { new: true });
         if (!updatedParking) {
             return res.status(404).json({ message: "Parking not found" });
         }
