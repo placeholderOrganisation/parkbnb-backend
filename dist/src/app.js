@@ -39,7 +39,6 @@ const db_client_1 = require("./clients/db-client");
 const auth_api_1 = require("./controllers/api/auth-api");
 const user_api_1 = require("./controllers/api/user-api");
 const parking_api_1 = require("./controllers/api/parking-api");
-const storagespace_api_1 = require("./controllers/api/storagespace-api");
 // @ts-ignore
 const s3_api_1 = require("./controllers/api/s3-api");
 const geocode_api_1 = require("./controllers/api/geocode-api");
@@ -64,7 +63,6 @@ app.use(passport_1.default.session());
 app.use("/v1/auth", auth_api_1.authController);
 app.use("/v1/user", user_api_1.userController);
 app.use("/v1/parking", parking_api_1.parkingController);
-app.use("/v1/storagespace", storagespace_api_1.storageSpaceController);
 app.use("/v1/s3", s3_api_1.s3Controller);
 app.use("/v1/geocode", geocode_api_1.geocodingController);
 // Route used to test app

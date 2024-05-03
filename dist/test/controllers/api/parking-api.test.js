@@ -31,6 +31,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -434,7 +445,9 @@ describe("Parking API", () => {
             // Mock request body
             const requestBody = {
                 id: "123",
+                owner_id: "123",
             };
+            const { owner_id: _ } = requestBody, safeParkingDataAttributes = __rest(requestBody, ["owner_id"]);
             // Make the request
             const response = yield (0, supertest_1.default)(app_1.default)
                 .put("/v1/parking/1")
@@ -443,14 +456,16 @@ describe("Parking API", () => {
             expect(response.status).toBe(404);
             expect(response.body).toEqual({ message: "Parking not found" });
             expect(parking_model_1.Parking.findOneAndUpdate).toHaveBeenCalledTimes(1);
-            expect(parking_model_1.Parking.findOneAndUpdate).toHaveBeenCalledWith({ id: "1" }, requestBody, { new: true });
+            expect(parking_model_1.Parking.findOneAndUpdate).toHaveBeenCalledWith({ id: "1", owner_id: "123" }, safeParkingDataAttributes, { new: true });
             // Add more assertions as needed
         }));
         it("should return 200 and update the parking", () => __awaiter(void 0, void 0, void 0, function* () {
             // Mock request body
             const requestBody = {
                 id: "123",
+                owner_id: "123",
             };
+            const { owner_id: _ } = requestBody, safeParkingDataAttributes = __rest(requestBody, ["owner_id"]);
             // Make the request
             const response = yield (0, supertest_1.default)(app_1.default)
                 .put("/v1/parking/1")
@@ -458,14 +473,16 @@ describe("Parking API", () => {
             // Assert the response
             expect(response.status).toBe(200);
             expect(parking_model_1.Parking.findOneAndUpdate).toHaveBeenCalledTimes(1);
-            expect(parking_model_1.Parking.findOneAndUpdate).toHaveBeenCalledWith({ id: "1" }, requestBody, { new: true });
+            expect(parking_model_1.Parking.findOneAndUpdate).toHaveBeenCalledWith({ id: "1", owner_id: "123" }, safeParkingDataAttributes, { new: true });
             // Add more assertions as needed
         }));
         it("should return 500 if an error occurs while updating the parking", () => __awaiter(void 0, void 0, void 0, function* () {
             // Mock request body
             const requestBody = {
                 id: "123",
+                owner_id: "123",
             };
+            const { owner_id: _ } = requestBody, safeParkingDataAttributes = __rest(requestBody, ["owner_id"]);
             // Make the request
             const response = yield (0, supertest_1.default)(app_1.default)
                 .put("/v1/parking/1")
@@ -474,7 +491,7 @@ describe("Parking API", () => {
             expect(response.status).toBe(500);
             expect(response.body).toEqual({ message: "Failed to update parking" });
             expect(parking_model_1.Parking.findOneAndUpdate).toHaveBeenCalledTimes(1);
-            expect(parking_model_1.Parking.findOneAndUpdate).toHaveBeenCalledWith({ id: "1" }, requestBody, { new: true });
+            expect(parking_model_1.Parking.findOneAndUpdate).toHaveBeenCalledWith({ id: "1", owner_id: "123" }, safeParkingDataAttributes, { new: true });
         }));
     });
     describe("POST /", () => {

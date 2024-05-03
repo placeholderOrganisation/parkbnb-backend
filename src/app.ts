@@ -13,7 +13,6 @@ returnDbClient();
 import { authController } from "./controllers/api/auth-api";
 import { userController } from "./controllers/api/user-api";
 import { parkingController } from "./controllers/api/parking-api";
-import { storageSpaceController } from "./controllers/api/storagespace-api";
 
 // @ts-ignore
 import { s3Controller } from "./controllers/api/s3-api";
@@ -48,7 +47,6 @@ app.use(passport.session());
 app.use("/v1/auth", authController);
 app.use("/v1/user", userController);
 app.use("/v1/parking", parkingController);
-app.use("/v1/storagespace", storageSpaceController);
 app.use("/v1/s3", s3Controller);
 app.use("/v1/geocode", geocodingController);
 
