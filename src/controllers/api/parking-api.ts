@@ -50,7 +50,7 @@ parkingController.delete("/", async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Parking Data is required" });
     }
     const deletedParking: ParkingObject | null = await Parking.findOneAndDelete(
-      { id: parkingId, owner_id: ownwerId }
+      { _id: parkingId, owner_id: ownwerId }
     );
     if (!deletedParking) {
       return res.status(404).json({ message: "Parking not found" });
@@ -76,7 +76,7 @@ parkingController.put("/:id", async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Parking data is required" });
     }
     const updatedParking: ParkingObject | null = await Parking.findOneAndUpdate(
-      { id: parkingId, owner_id: owner_id },
+      { _id: parkingId, owner_id: owner_id },
       safeParkingDataAttributes,
       { new: true }
     );

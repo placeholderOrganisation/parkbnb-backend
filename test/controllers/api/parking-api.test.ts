@@ -456,7 +456,7 @@ describe("Parking API", () => {
       expect(response.body).toEqual({ message: "Parking not found" });
       expect(Parking.findOneAndUpdate).toHaveBeenCalledTimes(1);
       expect(Parking.findOneAndUpdate).toHaveBeenCalledWith(
-        { id: "1", owner_id: "123" },
+        { _id: "1", owner_id: "123" },
         safeParkingDataAttributes,
         { new: true }
       );
@@ -480,7 +480,7 @@ describe("Parking API", () => {
       expect(response.status).toBe(200);
       expect(Parking.findOneAndUpdate).toHaveBeenCalledTimes(1);
       expect(Parking.findOneAndUpdate).toHaveBeenCalledWith(
-        { id: "1", owner_id: "123"},
+        { _id: "1", owner_id: "123"},
         safeParkingDataAttributes,
         { new: true }
       );
@@ -505,7 +505,7 @@ describe("Parking API", () => {
       expect(response.body).toEqual({ message: "Failed to update parking" });
       expect(Parking.findOneAndUpdate).toHaveBeenCalledTimes(1);
       expect(Parking.findOneAndUpdate).toHaveBeenCalledWith(
-        { id: "1", owner_id: "123"},
+        { _id: "1", owner_id: "123"},
         safeParkingDataAttributes,
         { new: true }
       );
