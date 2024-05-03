@@ -65,17 +65,19 @@ parkingController.delete("/", async (req: Request, res: Response) => {
 parkingController.put("/:id", async (req: Request, res: Response) => {
   try {
     const parkingId = req.params.id;
+    const owner_id = req.body.owner_id;
     const parkingData: RequestParkingObject = req.body;
+    const { owner_id: _, ...safeParkingDataAttributes } = parkingData;
     if (
-      !parkingData ||
-      Object.keys(parkingData).length === 0 ||
-      parkingData.owner_id
+      !safeParkingDataAttributes ||
+      Object.keys(safeParkingDataAttributes).length === 0 ||
+      !owner_id
     ) {
       return res.status(400).json({ message: "Parking data is required" });
     }
     const updatedParking: ParkingObject | null = await Parking.findOneAndUpdate(
-      { id: parkingId },
-      parkingData,
+      { id: parkingId, owner_id: owner_id },
+      safeParkingDataAttributes,
       { new: true }
     );
     if (!updatedParking) {
