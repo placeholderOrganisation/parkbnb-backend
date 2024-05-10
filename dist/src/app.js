@@ -65,38 +65,39 @@ app.use("/v1/user", user_api_1.userController);
 app.use("/v1/parking", parking_api_1.parkingController);
 app.use("/v1/s3", s3_api_1.s3Controller);
 app.use("/v1/geocode", geocode_api_1.geocodingController);
-// Route used to test app
-app.get("/sa", (req, res) => {
-    res.status(200).send("Hello, World from backend!");
-});
-// Route used to test app
-app.get("/sa/test-route", (req, res) => {
-    res.status(200).send("Hello, World!");
-});
-// Route to return HTML img tag
-app.get("/sa/image", (req, res) => {
-    const imageUrl = "https://parkbnb-test.s3.us-east-2.amazonaws.com/engagement%20%281%29.jpg";
-    const imgTag = `<img src="${imageUrl}" alt="Image">`;
-    res.send(imgTag);
-});
-// Route to /test that sends a form as HTML to upload a file to /v1/parking/upload
-app.get("/test/sa/s3", (req, res) => {
-    res.send(`
-    <form action="/v1/s3/upload-single" method="post" enctype="multipart/form-data">
-      <input type="file" name="file" />
-      <input type="submit" value="Upload" />
-    </form>
-  `);
-});
-// Route to test auth
-app.get("/test/sa/auth", (req, res) => {
-    res.send(`
-    <form action="/v1/auth/local" method="post">
-      <input type="text" name="userEmail" />
-      <input type="text" name="password" />
-      <input type="submit" value="Upload" />
-    </form>
-  `);
-});
+// // Route used to test app
+// app.get("/sa", (req, res) => {
+//   res.status(200).send("Hello, World from backend!");
+// });
+// // Route used to test app
+// app.get("/sa/test-route", (req, res) => {
+//   res.status(200).send("Hello, World!");
+// });
+// // Route to return HTML img tag
+// app.get("/sa/image", (req, res) => {
+//   const imageUrl =
+//     "https://parkbnb-test.s3.us-east-2.amazonaws.com/engagement%20%281%29.jpg";
+//   const imgTag = `<img src="${imageUrl}" alt="Image">`;
+//   res.send(imgTag);
+// });
+// // Route to /test that sends a form as HTML to upload a file to /v1/parking/upload
+// app.get("/test/sa/s3", (req, res) => {
+//   res.send(`
+//     <form action="/v1/s3/upload-single" method="post" enctype="multipart/form-data">
+//       <input type="file" name="file" />
+//       <input type="submit" value="Upload" />
+//     </form>
+//   `);
+// });
+// // Route to test auth
+// app.get("/test/sa/auth", (req, res) => {
+//   res.send(`
+//     <form action="/v1/auth/local" method="post">
+//       <input type="text" name="userEmail" />
+//       <input type="text" name="password" />
+//       <input type="submit" value="Upload" />
+//     </form>
+//   `);
+// });
 exports.default = app;
 //# sourceMappingURL=app.js.map
