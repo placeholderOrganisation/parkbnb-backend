@@ -45,7 +45,7 @@ const geocode_api_1 = require("./controllers/api/geocode-api");
 // Create Express server
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
-    origin: [process.env.CLIENT_URL, "https://checkout.stripe.com"],
+    origin: [process.env.CLIENT_URL, process.env.CLIENT_URL_WITH_WWW, "https://checkout.stripe.com"],
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
 }));
