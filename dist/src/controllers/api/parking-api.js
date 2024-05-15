@@ -113,4 +113,16 @@ exports.parkingController.post("/", (req, res) => __awaiter(void 0, void 0, void
         res.status(500).json({ message: "Failed to create parking", error });
     }
 }));
+// Route to get all parkings which are owned by a user
+exports.parkingController.get("/user/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.params.id;
+        const parkings = yield parking_model_1.Parking.find({ owner_id: userId });
+        const partialParkings = (0, parking_utils_1.getPartialParkings)(parkings);
+        res.status(200).json(partialParkings);
+    }
+    catch (error) {
+        res.status(500).json({ message: "Failed to get parkings" });
+    }
+}));
 //# sourceMappingURL=parking-api.js.map

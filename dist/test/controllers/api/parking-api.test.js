@@ -67,6 +67,12 @@ jest.mock("../../../src/models/parking-model", () => ({
         })
             .mockImplementationOnce(() => {
             throw new Error();
+        })
+            .mockImplementationOnce(() => {
+            return parkings;
+        })
+            .mockImplementationOnce(() => {
+            throw new Error();
         }),
         findOne: jest
             .fn()
@@ -575,6 +581,22 @@ describe("Parking API", () => {
             expect(parking_model_1.Parking.create).toHaveBeenCalledTimes(1);
             expect(parking_model_1.Parking.create).toHaveBeenCalledWith(emptyParkingObject);
             // Add more assertions as needed
+        }));
+    });
+    describe("GET /user/:id", () => {
+        it("should return 200 and return partial parkings", () => __awaiter(void 0, void 0, void 0, function* () {
+            // Make the request
+            const response = yield (0, supertest_1.default)(app_1.default).get("/v1/parking/user/1");
+            // Assert the response
+            expect(response.status).toBe(200);
+            expect(response.body).toEqual(expectedPartialParkings);
+        }));
+        it("should return 500 if an error occurs", () => __awaiter(void 0, void 0, void 0, function* () {
+            // Make the request
+            const response = yield (0, supertest_1.default)(app_1.default).get("/v1/parking/user/2");
+            // Assert the response
+            expect(response.status).toBe(500);
+            expect(response.body).toEqual({ message: "Failed to get parkings" });
         }));
     });
 });

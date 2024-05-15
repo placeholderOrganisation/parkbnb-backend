@@ -65,14 +65,10 @@ app.use("/v1/user", user_api_1.userController);
 app.use("/v1/parking", parking_api_1.parkingController);
 app.use("/v1/s3", s3_api_1.s3Controller);
 app.use("/v1/geocode", geocode_api_1.geocodingController);
-// // Route used to test app
-// app.get("/sa", (req, res) => {
-//   res.status(200).send("Hello, World from backend!");
-// });
-// // Route used to test app
-// app.get("/sa/test-route", (req, res) => {
-//   res.status(200).send("Hello, World!");
-// });
+// Route used to test app
+app.get("/sa/test-route", (req, res) => {
+    res.status(200).send("Hello, World!");
+});
 // // Route to return HTML img tag
 // app.get("/sa/image", (req, res) => {
 //   const imageUrl =

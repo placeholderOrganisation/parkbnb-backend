@@ -23,6 +23,12 @@ jest.mock("../../../src/models/parking-model", () => ({
       })
       .mockImplementationOnce(() => {
         throw new Error();
+      })
+      .mockImplementationOnce(() => {
+        return parkings;
+      })
+      .mockImplementationOnce(() => {
+        throw new Error();
       }),
     findOne: jest
       .fn()
@@ -480,7 +486,7 @@ describe("Parking API", () => {
       expect(response.status).toBe(200);
       expect(Parking.findOneAndUpdate).toHaveBeenCalledTimes(1);
       expect(Parking.findOneAndUpdate).toHaveBeenCalledWith(
-        { _id: "1", owner_id: "123"},
+        { _id: "1", owner_id: "123" },
         safeParkingDataAttributes,
         { new: true }
       );
@@ -505,7 +511,7 @@ describe("Parking API", () => {
       expect(response.body).toEqual({ message: "Failed to update parking" });
       expect(Parking.findOneAndUpdate).toHaveBeenCalledTimes(1);
       expect(Parking.findOneAndUpdate).toHaveBeenCalledWith(
-        { _id: "1", owner_id: "123"},
+        { _id: "1", owner_id: "123" },
         safeParkingDataAttributes,
         { new: true }
       );
@@ -608,6 +614,27 @@ describe("Parking API", () => {
       expect(Parking.create).toHaveBeenCalledTimes(1);
       expect(Parking.create).toHaveBeenCalledWith(emptyParkingObject);
       // Add more assertions as needed
+    });
+  });
+
+  describe("GET /user/:id", () => {
+
+    it("should return 200 and return partial parkings", async () => {
+      // Make the request
+      const response = await request(app).get("/v1/parking/user/1");
+
+      // Assert the response
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(expectedPartialParkings);
+    });
+
+    it("should return 500 if an error occurs", async () => {
+      // Make the request
+      const response = await request(app).get("/v1/parking/user/2");
+
+      // Assert the response
+      expect(response.status).toBe(500);
+      expect(response.body).toEqual({ message: "Failed to get parkings" });
     });
   });
 });

@@ -104,3 +104,17 @@ parkingController.post("/", async (req: Request, res: Response) => {
     res.status(500).json({ message: "Failed to create parking", error });
   }
 });
+
+// Route to get all parkings which are owned by a user
+parkingController.get("/user/:id", async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.id;
+    const parkings: ParkingObject[] = await Parking.find({ owner_id: userId });
+    const partialParkings: PartialParkingObject[] = getPartialParkings(
+      parkings
+    );
+    res.status(200).json(partialParkings);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to get parkings" });
+  }
+});
