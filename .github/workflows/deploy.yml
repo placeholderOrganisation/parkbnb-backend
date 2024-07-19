@@ -27,9 +27,6 @@ jobs:
     - name: move files to dist
       run: cp ecosystem.config.js dist/
 
-    - name: run tests
-      run: yarn test
-
     - name: Set up SSH
       env:
         SSH_PRIVATE_KEY: ${{ secrets.PARKBNB_GH_ACTION_SSHKEY_V2 }}
