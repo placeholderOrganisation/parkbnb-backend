@@ -5,50 +5,54 @@ on:
     branches:
       - master
 
+env:
+  OUTPUT_DIR: /root/app # Define the output directory variable
+  APP_NAME: my-app # Define the output directory variable
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '20'
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20"
 
-    - name: Install dependencies
-      run: yarn
+      - name: Install dependencies
+        run: yarn
 
-    - name: Build the backend
-      run: yarn build
+      - name: Build the backend
+        run: yarn build
 
-    - name: Set up SSH
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.PARKBNB_GH_ACTION_SSHKEY_V2 }}
-      run: |
-        mkdir -p ~/.ssh
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H 209.38.8.8 >> ~/.ssh/known_hosts
+      - name: Set up SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.PARKBNB_GH_ACTION_SSHKEY_V2 }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H 209.38.8.8 >> ~/.ssh/known_hosts
 
-    - name: Copy files to server
-      run: |
-        ls -la
-        scp -r dist root@209.38.8.8:/app
-        scp -r src root@209.38.8.8:/app
-        scp package.json root@209.38.8.8:/app
+      - name: Copy files to server
+        run: |
+          scp package.json root@209.38.8.8:$OUTPUT_DIR
+          scp -r src root@209.38.8.8:$OUTPUT_DIR
+          scp -r dist root@209.38.8.8:$OUTPUT_DIR
+          scp ecosystem.config.js root@209.38.8.8:$OUTPUT_DIR
 
-    - name: Install dependencies on server
-      run: |
-        ssh root@209.38.8.8 "
-          cd /app &&
-          yarn install"
+      - name: Copy .env.production to server
+        run: |
+          ssh root@209.38.8.8 "cp /root/.env.production $OUTPUT_DIR"
 
-    - name: Restart backend application with pm2
-      run: |
-        ssh root@209.38.8.8 "
-          cd /app &&
-          pm2 start node -r ./src/env/env-loader.prod.ts ./dist/src/server.js --name my-backend ||
-          pm2 reload my-backend"
+      - name: Install dependencies on server
+        run: |
+          ssh root@209.38.8.8 "cd $OUTPUT_DIR && yarn install"
+
+      - name: Restart backend application with pm2
+        run: |
+          ssh root@209.38.8.8 "
+            cd $OUTPUT_DIR && pm2 start ecosystem.config.js || pm2 reload $APP_NAME"
