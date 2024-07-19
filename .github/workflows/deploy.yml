@@ -1,4 +1,4 @@
-name: Deploy React App to DigitalOcean
+name: Deploy Backend to DigitalOcean
 
 on:
   push:
@@ -21,11 +21,8 @@ jobs:
     - name: Install dependencies
       run: yarn
 
-    - name: Build the project
+    - name: Build the backend
       run: yarn build
-
-    - name: move files to dist
-      run: cp ecosystem.config.js dist/
 
     - name: Set up SSH
       env:
@@ -36,6 +33,21 @@ jobs:
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -H 209.38.8.8 >> ~/.ssh/known_hosts
 
-    - name: Copy build files to server
+    - name: Copy files to server
       run: |
         scp -r dist root@209.38.8.8:/app
+        scp -r src root@209.38.8.8:/app
+        scp package.json root@209.38.8.8:/app
+
+    - name: Install dependencies on server
+      run: |
+        ssh root@209.38.8.8 "
+          cd /app &&
+          yarn install"
+
+    - name: Restart backend application with pm2
+      run: |
+        ssh root@209.38.8.8 "
+          cd /app &&
+          pm2 start node -r ./src/env/env-loader.prod.ts ./dist/src/server.js --name my-backend ||
+          pm2 reload my-backend"
