@@ -35,6 +35,7 @@ jobs:
 
     - name: Copy files to server
       run: |
+        ls -la
         scp -r dist root@209.38.8.8:/app
         scp -r src root@209.38.8.8:/app
         scp package.json root@209.38.8.8:/app
