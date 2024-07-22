@@ -35,24 +35,24 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H 209.38.8.8 >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.PARKBNB_MACHINE_IP }} >> ~/.ssh/known_hosts
 
       - name: Copy files to server
         run: |
-          scp package.json root@209.38.8.8:$OUTPUT_DIR
-          scp -r src root@209.38.8.8:$OUTPUT_DIR
-          scp -r dist root@209.38.8.8:$OUTPUT_DIR
-          scp ecosystem.config.js root@209.38.8.8:$OUTPUT_DIR
+          scp package.json root@${{ secrets.PARKBNB_MACHINE_IP }}:$OUTPUT_DIR
+          scp -r src root@${{ secrets.PARKBNB_MACHINE_IP }}:$OUTPUT_DIR
+          scp -r dist root@${{ secrets.PARKBNB_MACHINE_IP }}:$OUTPUT_DIR
+          scp ecosystem.config.js root@${{ secrets.PARKBNB_MACHINE_IP }}:$OUTPUT_DIR
 
       - name: Copy .env.production to server
         run: |
-          ssh root@209.38.8.8 "cp /root/.env.production $OUTPUT_DIR"
+          ssh root@${{ secrets.PARKBNB_MACHINE_IP }} "cp /root/.env.production $OUTPUT_DIR"
 
       - name: Install dependencies on server
         run: |
-          ssh root@209.38.8.8 "cd $OUTPUT_DIR && yarn install"
+          ssh root@${{ secrets.PARKBNB_MACHINE_IP }} "cd $OUTPUT_DIR && yarn install"
 
       - name: Restart backend application with pm2
         run: |
-          ssh root@209.38.8.8 "
+          ssh root@${{ secrets.PARKBNB_MACHINE_IP }} "
             cd $OUTPUT_DIR && pm2 start ecosystem.config.js || pm2 reload $APP_NAME"
