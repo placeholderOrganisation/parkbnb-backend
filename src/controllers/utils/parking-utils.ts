@@ -192,3 +192,19 @@ export const initializeEmptyParking = (): ParkingObject => {
 
   return newParkingObject;
 };
+
+export const sortAndFilterParkings = (
+  parkings: ParkingObject[]
+): ParkingObject[] => {
+  const sortedParkings = parkings.sort((a, b) => {
+    if (a.is_scraped === b.is_scraped) {
+      return 0;
+    }
+    if (a.is_scraped === false) {
+      return -1;
+    }
+    return;
+  });
+
+  return sortedParkings;
+};

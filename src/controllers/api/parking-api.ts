@@ -5,6 +5,7 @@ import {
   RequestParkingObject,
   assembleNewParkingBody,
   getPartialParkings,
+  sortAndFilterParkings,
 } from "../utils/parking-utils";
 
 export const parkingController = express.Router();
@@ -15,8 +16,12 @@ parkingController.get("/", async (req: Request, res: Response) => {
     const parkings: ParkingObject[] = await Parking.find({
       is_available: true,
     });
+
+    // sort partialParkings by is_scraped == false
+    const sortedParkings = sortAndFilterParkings(parkings);
+
     const partialParkings: PartialParkingObject[] = getPartialParkings(
-      parkings
+      sortedParkings
     );
 
     // return neccessary data
