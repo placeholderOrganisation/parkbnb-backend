@@ -26,7 +26,7 @@ interface AutocompleteClientResponse {
   error?: JSON;
 }
 
-export interface GeocodeUtilFunctionResponse {
+export interface AutocompleteUtilFunctionResponse {
   results?: extractAutocompleteResponse[];
   success: boolean;
 }
@@ -76,7 +76,7 @@ export const geocode = (input: string): GeocodeUtilFunctionResponse => {
   });
 };
 
-export const autocomplete = (input: string): GeocodeUtilFunctionResponse => {
+export const autocomplete = (input: string): AutocompleteUtilFunctionResponse => {
   const geocodeClientResponsePromises: Promise<
     AutocompleteClientResponse
   >[] = clients.map((client: GeocodeClient) => {

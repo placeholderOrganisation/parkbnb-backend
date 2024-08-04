@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { GeocodeUtilFunctionResponse, autocomplete, geocode } from "../utils/geocode-utils";
+import { AutocompleteUtilFunctionResponse, GeocodeUtilFunctionResponse, autocomplete, geocode } from "../utils/geocode-utils";
 // going to contain routes to expose mapbox api from my app
 
 export const geocodingController = Router();
@@ -29,7 +29,7 @@ geocodingController.post("/autocomplete", async (req: Request, res: Response) =>
     if (!address) {
       return res.status(400).json({ error: "Address is required" });
     }
-    const result: GeocodeUtilFunctionResponse = await autocomplete(address);
+    const result: AutocompleteUtilFunctionResponse = await autocomplete(address);
 
     if (result.success === false) {
       return res.status(500).json(result);

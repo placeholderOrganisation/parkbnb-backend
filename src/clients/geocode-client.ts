@@ -17,7 +17,7 @@ interface extractLatLongResponse {
 export interface extractAutocompleteResponse {
   text: string;
   place_name: string;
-  center: number[];
+  center: extractLatLongResponse;
 }
 
 const MapBoxGLClient: GeocodeClient = {
@@ -67,10 +67,15 @@ const MapBoxGLClient: GeocodeClient = {
     const features = data["features"] as any[];
 
     const results = features.map((feature) => {
+      const lng = parseFloat(feature["center"][0]);
+      const lat = parseFloat(feature["center"][1]);
       return {
         text: feature["text"],
         place_name: feature["place_name"],
-        center: feature["center"],
+        center: {
+          lat,
+          lng,
+        },
       };
     });
 
@@ -93,7 +98,7 @@ const emptyClient: GeocodeClient = {
     return { lat: -1, lng: -1 };
   },
   extractAutocompleteResults: (data: JSON): extractAutocompleteResponse[] => {
-    return [{ text: "", place_name: "", center: [-1, -1] }];
+    return [{ text: "", place_name: "", center: { lat: -1, lng: -1 } }];
   },
 };
 
