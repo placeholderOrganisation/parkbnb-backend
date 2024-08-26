@@ -26,7 +26,7 @@ const MapBoxGLClient: GeocodeClient = {
     return encodeURIComponent(input);
   },
   geoCode: (address: string): Promise<JSON> => {
-    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?country=ca&access_token=${process.env.MAPBOX_ACCESS_TOKEN}`;
+    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?proximity=ip&country=ca&access_token=${process.env.MAPBOX_ACCESS_TOKEN}`;
     return fetch(url)
       .then(
         async (response): Promise<JSON> => {
@@ -41,7 +41,7 @@ const MapBoxGLClient: GeocodeClient = {
       });
   },
   autocomplete: (address: string): Promise<JSON> => {
-    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?autocomplete=true&country=ca&access_token=${process.env.MAPBOX_ACCESS_TOKEN}`;
+    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?proximity=ip&autocomplete=true&country=ca&access_token=${process.env.MAPBOX_ACCESS_TOKEN}`;
     return fetch(url)
       .then(
         async (response): Promise<JSON> => {
