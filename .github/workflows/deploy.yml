@@ -17,42 +17,42 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: "20"
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: "20"
 
-      - name: Install dependencies
-        run: yarn
+  #     - name: Install dependencies
+  #       run: yarn
 
-      - name: Build the backend
-        run: yarn build
+  #     - name: Build the backend
+  #       run: yarn build
 
-      - name: Set up SSH
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.PARKBNB_GH_ACTION_SSHKEY_V2 }}
-        run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.PARKBNB_MACHINE_IP }} >> ~/.ssh/known_hosts
+  #     - name: Set up SSH
+  #       env:
+  #         SSH_PRIVATE_KEY: ${{ secrets.PARKBNB_GH_ACTION_SSHKEY_V2 }}
+  #       run: |
+  #         mkdir -p ~/.ssh
+  #         echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+  #         chmod 600 ~/.ssh/id_rsa
+  #         ssh-keyscan -H ${{ secrets.PARKBNB_MACHINE_IP }} >> ~/.ssh/known_hosts
 
-      - name: Copy files to server
-        run: |
-          scp package.json root@${{ secrets.PARKBNB_MACHINE_IP }}:$OUTPUT_DIR
-          scp -r src root@${{ secrets.PARKBNB_MACHINE_IP }}:$OUTPUT_DIR
-          scp -r dist root@${{ secrets.PARKBNB_MACHINE_IP }}:$OUTPUT_DIR
-          scp ecosystem.config.js root@${{ secrets.PARKBNB_MACHINE_IP }}:$OUTPUT_DIR
+  #     - name: Copy files to server
+  #       run: |
+  #         scp package.json root@${{ secrets.PARKBNB_MACHINE_IP }}:$OUTPUT_DIR
+  #         scp -r src root@${{ secrets.PARKBNB_MACHINE_IP }}:$OUTPUT_DIR
+  #         scp -r dist root@${{ secrets.PARKBNB_MACHINE_IP }}:$OUTPUT_DIR
+  #         scp ecosystem.config.js root@${{ secrets.PARKBNB_MACHINE_IP }}:$OUTPUT_DIR
 
-      - name: Copy .env.production to server
-        run: |
-          ssh root@${{ secrets.PARKBNB_MACHINE_IP }} "cp /root/.env.production $OUTPUT_DIR"
+  #     - name: Copy .env.production to server
+  #       run: |
+  #         ssh root@${{ secrets.PARKBNB_MACHINE_IP }} "cp /root/.env.production $OUTPUT_DIR"
 
-      - name: Install dependencies on server
-        run: |
-          ssh root@${{ secrets.PARKBNB_MACHINE_IP }} "cd $OUTPUT_DIR && yarn install"
+  #     - name: Install dependencies on server
+  #       run: |
+  #         ssh root@${{ secrets.PARKBNB_MACHINE_IP }} "cd $OUTPUT_DIR && yarn install"
 
-      - name: Restart backend application with pm2
-        run: |
-          ssh root@${{ secrets.PARKBNB_MACHINE_IP }} "
-            cd $OUTPUT_DIR && pm2 start ecosystem.config.js || pm2 reload $APP_NAME"
+  #     - name: Restart backend application with pm2
+  #       run: |
+  #         ssh root@${{ secrets.PARKBNB_MACHINE_IP }} "
+  #           cd $OUTPUT_DIR && pm2 start ecosystem.config.js || pm2 reload $APP_NAME"
