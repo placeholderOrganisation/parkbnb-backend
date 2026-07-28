@@ -18,6 +18,8 @@ RUN NODE_OPTIONS="--max_old_space_size=8192" yarn build
 
 # Expose port
 EXPOSE ${PORT}
+EXPOSE 3001
+EXPOSE 10000
 
 # Start the application
 CMD ["node", "dist/src/server.js"] 
