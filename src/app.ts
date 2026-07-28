@@ -51,8 +51,8 @@ app.use("/v1/s3", s3Controller);
 app.use("/v1/geocode", geocodingController);
 
 // Route used to test app
-app.get("/sa/test-route", (req, res) => {
-  res.status(200).send("Hello, World!");
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
 });
 
 // // Route to return HTML img tag
