@@ -21,6 +21,11 @@ import { geocodingController } from "./controllers/api/geocode-api";
 // Create Express server
 const app = express();
 
+const isProduction = process.env.NODE_ENV === "production";
+
+// Behind Render's proxy, trust X-Forwarded-Proto so `secure` cookies work
+app.set("trust proxy", 1);
+
 app.use(
   cors({
     origin: [process.env.CLIENT_URL, process.env.CLIENT_WITH_WWW, process.env.SERVER_WITH_WWW, "https://checkout.stripe.com"],
@@ -33,7 +38,12 @@ app.use(
   cookieSession({
     name: "session",
     keys: [process.env.COOKIE_SECRET],
-    maxAge: 24 * 60 * 60 * 100,
+    maxAge: 24 * 60 * 60 * 1000,
+    // Cross-site cookies (frontend and backend are different hosts) require
+    // SameSite=None + Secure in production. Keep lax/insecure for local HTTP dev.
+    sameSite: isProduction ? "none" : "lax",
+    secure: isProduction,
+    httpOnly: true,
   })
 );
 

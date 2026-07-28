@@ -8,52 +8,64 @@ import {
   handleSocialMediaSignUp,
 } from "../controllers/utils/user-utils";
 
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: `${process.env.SERVER_URL}/v1/auth/google/callback`,
-    },
-    function (
-      accessToken: string,
-      refreshToken: string,
-      profile: any,
-      done: any
-    ) {
-      /**
-       * check if user exists in the database
-       * if user exists, return the user
-       * if user does not exist, create a new user and return the user
-       */
-      handleSocialMediaSignUp(profile, done);
-    }
-  )
-);
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: `${process.env.SERVER_URL}/v1/auth/google/callback`,
+      },
+      function (
+        accessToken: string,
+        refreshToken: string,
+        profile: any,
+        done: any
+      ) {
+        /**
+         * check if user exists in the database
+         * if user exists, return the user
+         * if user does not exist, create a new user and return the user
+         */
+        handleSocialMediaSignUp(profile, done);
+      }
+    )
+  );
+} else {
+  console.warn(
+    "[passport] Google OAuth disabled: GOOGLE_CLIENT_ID/GOOGLE_CLIENT_SECRET not set"
+  );
+}
 
-passport.use(
-  new FacebookStrategy(
-    {
-      clientID: process.env.FACEBOOK_APP_ID,
-      clientSecret: process.env.FACEBOOK_APP_SECRET,
-      callbackURL: `${process.env.SERVER_URL}/v1/auth/facebook/callback`,
-      profileFields: ["id", "email", "displayName", "photos"],
-    },
-    function (
-      accessToken: string,
-      refreshToken: string,
-      profile: any,
-      done: any
-    ) {
-      /**
-       * check if user exists in the database
-       * if user exists, return the user
-       * if user does not exist, create a new user and return the user
-       */
-      handleSocialMediaSignUp(profile, done);
-    }
-  )
-);
+if (process.env.FACEBOOK_APP_ID && process.env.FACEBOOK_APP_SECRET) {
+  passport.use(
+    new FacebookStrategy(
+      {
+        clientID: process.env.FACEBOOK_APP_ID,
+        clientSecret: process.env.FACEBOOK_APP_SECRET,
+        callbackURL: `${process.env.SERVER_URL}/v1/auth/facebook/callback`,
+        profileFields: ["id", "email", "displayName", "photos"],
+      },
+      function (
+        accessToken: string,
+        refreshToken: string,
+        profile: any,
+        done: any
+      ) {
+        /**
+         * check if user exists in the database
+         * if user exists, return the user
+         * if user does not exist, create a new user and return the user
+         */
+        handleSocialMediaSignUp(profile, done);
+      }
+    )
+  );
+} else {
+  console.warn(
+    "[passport] Facebook OAuth disabled: FACEBOOK_APP_ID/FACEBOOK_APP_SECRET not set"
+  );
+}
 
 passport.use(
   new LocalStrategy({ usernameField: "userEmail" }, function (
