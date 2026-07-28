@@ -16,7 +16,9 @@ export const returnDbClient = (): Mongoose => {
         console.log("Connected to MongoDB");
         db = response;
       })
-      .catch((err: Error) => console.error("Could not connect to MongoDB"));
+      .catch((err: Error) =>
+        console.error("Could not connect to MongoDB:", err)
+      );
   }
   return db;
 };
