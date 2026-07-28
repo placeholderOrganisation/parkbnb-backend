@@ -38,7 +38,7 @@ app.use(
 );
 
 // Express configuration
-app.set("port", process.env.PORT || 3001);
+app.set("port", process.env.PORT || 10000);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize(passportConfig));
